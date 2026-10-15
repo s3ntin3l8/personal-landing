@@ -35,17 +35,16 @@ export interface Crop {
   h: number;
 }
 
-export interface Marker {
-  /** Position in percent of the *source* image (not the crop). */
-  x: number;
-  y: number;
+/**
+ * One bento tile. `lg` spans 4 of 6 columns and two rows, `half` 3, `sm` 2,
+ * `full` 6. A tile shows either a zoomed crop of a screenshot or a big stat.
+ */
+export interface Feature {
   title: string;
   body: string;
-}
-
-export interface Detail extends Shot {
-  crop: Crop;
-  markers: Marker[];
+  size: 'lg' | 'half' | 'sm' | 'full';
+  shot?: { image: ImageMetadata; crop: Crop; alt: string };
+  stat?: string;
 }
 
 export interface Project {
@@ -69,11 +68,9 @@ export interface Project {
   status: string;
   /** Fig. N.1. 'graph' is the line-drawing stand-in until real captures exist. */
   hero: Shot | 'graph';
-  /** Fig. N.2, the annotated detail. */
-  detail?: Detail;
-  /** Notes shown as the legend when there is no annotated screenshot. */
-  notes?: { title: string; body: string }[];
-  /** Secondary figures: wide crops or phones. */
+  /** Bento tiles, in grid order. */
+  features: Feature[];
+  /** Secondary figures: wide shots or phones. */
   extras?: (Shot & { kind: 'wide' | 'phone' })[];
 }
 
@@ -100,51 +97,59 @@ export const projects: Project[] = [
       alt: 'Mullion dashboard with an agent session next to the project sidebar',
       caption: 'Workspace with a live agent session and the project sidebar.',
     },
-    detail: {
-      image: mullionGit,
-      alt: 'Mullion sidebar and git panel, annotated',
-      caption: 'Sidebar and git panel, annotated.',
-      crop: { x: 0, y: 3, w: 47, h: 57 },
-      markers: [
-        {
-          x: 4,
-          y: 8.9,
-          title: 'Named workspaces',
-          body: 'Split, tab and save layouts. Sessions survive redeploys and closed tabs.',
-        },
-        {
-          x: 22,
-          y: 20.6,
-          title: 'Git per project',
-          body: 'Branch, changes and worktrees in a panel next to the agent.',
-        },
-        {
-          x: 33,
-          y: 23.6,
-          title: 'Auto-fetch',
-          body: 'Remotes stay current while agents work.',
-        },
-        {
-          x: 7,
-          y: 26.8,
-          title: 'Attention filters',
-          body: 'See at a glance which session is waiting for you.',
-        },
-        {
-          x: 2.6,
-          y: 33.8,
-          title: 'Live session state',
-          body: 'Every PTY reports working, idle or exited.',
-        },
-      ],
-    },
-    extras: [
+    features: [
       {
-        kind: 'wide',
-        image: mullionKanban,
-        alt: 'Mullion Task Master Kanban board',
-        caption: 'Task Master: a Kanban board that agents pick work from.',
+        size: 'lg',
+        title: 'Git, beside the agent',
+        body: 'Branch, changes and worktrees in a panel next to every session, with auto-fetch while agents work.',
+        shot: {
+          image: mullionGit,
+          crop: { x: 15.5, y: 12, w: 31, h: 34 },
+          alt: 'Mullion git panel open over a terminal session',
+        },
       },
+      {
+        size: 'sm',
+        title: 'Workspaces that stay',
+        body: 'Saved layouts. Sessions survive redeploys and closed tabs.',
+        shot: {
+          image: mullionDashboard,
+          crop: { x: 0, y: 4, w: 15, h: 11 },
+          alt: 'Mullion workspace switcher',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'Who needs you',
+        body: 'Attention, working and exited, at a glance.',
+        shot: {
+          image: mullionDashboard,
+          crop: { x: 0, y: 25, w: 15, h: 19 },
+          alt: 'Mullion session filters and per-project sessions',
+        },
+      },
+      {
+        size: 'half',
+        title: 'Any agent CLI',
+        body: 'Claude Code, Codex, opencode and friends, each on a real PTY kept alive under dtach.',
+        shot: {
+          image: mullionDashboard,
+          crop: { x: 15, y: 7, w: 33, h: 32 },
+          alt: 'Claude Code running inside a Mullion terminal',
+        },
+      },
+      {
+        size: 'half',
+        title: 'Tasks agents can take',
+        body: 'A Kanban board from backlog to done that agents pick work from.',
+        shot: {
+          image: mullionKanban,
+          crop: { x: 15.5, y: 10, w: 36.5, h: 35 },
+          alt: 'Mullion Task Master Kanban board',
+        },
+      },
+    ],
+    extras: [
       {
         kind: 'phone',
         image: mullionMobileTerminal,
@@ -181,51 +186,55 @@ export const projects: Project[] = [
       alt: 'Pocket holdings overview in dark mode',
       caption: 'Holdings across every asset class and currency.',
     },
-    detail: {
-      image: pocketInsights,
-      alt: 'Pocket insights page, annotated',
-      caption: 'Insights, annotated.',
-      crop: { x: 24, y: 10, w: 61.5, h: 36 },
-      markers: [
-        {
-          x: 29,
-          y: 15.8,
-          title: 'Returns that make sense',
-          body: 'Money-weighted XIRR next to time-weighted return.',
-        },
-        {
-          x: 53.7,
-          y: 23.7,
-          title: 'Drift',
-          body: 'How far the portfolio has wandered from its targets.',
-        },
-        {
-          x: 57.5,
-          y: 29.7,
-          title: 'Rebalancing hints',
-          body: 'Per asset class, in percentage points.',
-        },
-        {
-          x: 61.5,
-          y: 14.5,
-          title: 'Concentration',
-          body: 'Largest position, classes, markets and currencies.',
-        },
-        {
-          x: 61.4,
-          y: 24,
-          title: 'Best and worst',
-          body: 'Leaders and laggards across the portfolio.',
-        },
-      ],
-    },
-    extras: [
+    features: [
       {
-        kind: 'wide',
-        image: pocketTax,
-        alt: 'Pocket tax report page',
-        caption: 'German and Indonesian tax reports.',
+        size: 'half',
+        title: 'Tax, done',
+        body: 'Abgeltungsteuer and the Freistellungsauftrag for Germany, the final-tax regime for Indonesia.',
+        shot: {
+          image: pocketTax,
+          crop: { x: 24.3, y: 14.5, w: 30.2, h: 23 },
+          alt: 'Pocket tax report with estimated tax and allowance usage',
+        },
       },
+      {
+        size: 'half',
+        title: 'Import from anywhere',
+        body: 'Broker screenshots read by an LLM, CSV and PDF parsers, or live sync with Trade Republic and IBKR.',
+        stat: '4 ways in',
+      },
+      {
+        size: 'sm',
+        title: 'Every asset class',
+        body: 'Equities, gold, bonds, funds and cash, across currencies.',
+        shot: {
+          image: pocketHoldings,
+          crop: { x: 24.5, y: 37.5, w: 17.5, h: 12.5 },
+          alt: 'Pocket allocation donut by asset class',
+        },
+      },
+      {
+        size: 'lg',
+        title: 'Returns that make sense',
+        body: 'Money-weighted XIRR, time-weighted return, and drift from your target weights with a hint for each class.',
+        shot: {
+          image: pocketInsights,
+          crop: { x: 24, y: 10.5, w: 35.5, h: 34.5 },
+          alt: 'Pocket insights with annualised return and rebalancing',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'A year at a glance',
+        body: 'Portfolio value from one day to all time, with live IDX prices.',
+        shot: {
+          image: pocketHoldings,
+          crop: { x: 24.3, y: 12, w: 35.7, h: 24 },
+          alt: 'Pocket portfolio value chart',
+        },
+      },
+    ],
+    extras: [
       {
         kind: 'phone',
         image: pocketHoldingsNarrow,
@@ -258,48 +267,50 @@ export const projects: Project[] = [
     since: '2026',
     status: 'In service',
     hero: {
-      image: runwayDashboard,
-      alt: 'Runway dashboard with provider quota cards',
-      caption: 'Every provider, with what is at risk on top.',
+      image: runwayHistory,
+      alt: 'Runway history page with usage over seven days',
+      caption: 'Usage history for every quota window.',
     },
-    detail: {
-      image: runwayProvider,
-      alt: 'Runway provider detail, annotated',
-      caption: 'Provider detail, annotated.',
-      crop: { x: 17, y: 20, w: 83, h: 21.5 },
-      markers: [
-        {
-          x: 25,
-          y: 27.4,
-          title: 'Reset timers',
-          body: 'Every quota window, counting down.',
-        },
-        {
-          x: 45.4,
-          y: 25.9,
-          title: 'Pace marker',
-          body: 'Where usage should be right now to last until the reset.',
-        },
-        {
-          x: 52,
-          y: 27.4,
-          title: 'Projected at reset',
-          body: 'From event-sourced history, not a guess.',
-        },
-        {
-          x: 88,
-          y: 30,
-          title: 'Theil-Sen forecast',
-          body: 'A robust trend line to the end of the window.',
-        },
-      ],
-    },
-    extras: [
+    features: [
       {
-        kind: 'wide',
-        image: runwayHistory,
-        alt: 'Runway history page with usage trends',
-        caption: 'History with forecast overlay.',
+        size: 'full',
+        title: 'Fifteen providers. One glance',
+        body: 'Claude, Gemini, ChatGPT, Copilot, OpenRouter, Ollama and more, each with remaining capacity and a reset timer.',
+        shot: {
+          image: runwayDashboard,
+          crop: { x: 17.5, y: 41, w: 80.5, h: 56 },
+          alt: 'Runway provider cards with usage bars and reset timers',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'At risk, on top',
+        body: 'What is exhausted, or about to be, comes first.',
+        shot: {
+          image: runwayDashboard,
+          crop: { x: 17.5, y: 11.5, w: 26.5, h: 16.5 },
+          alt: 'Runway at-risk card for an exhausted quota',
+        },
+      },
+      {
+        size: 'lg',
+        title: 'Pace, not just percent',
+        body: 'Every window shows where usage should be right now, and where it will land at the reset.',
+        shot: {
+          image: runwayProvider,
+          crop: { x: 17.5, y: 20, w: 40, h: 21.5 },
+          alt: 'Runway quota windows with pace markers and projections',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'Forecasts',
+        body: 'A Theil-Sen trend to the end of every window.',
+        shot: {
+          image: runwayProvider,
+          crop: { x: 58, y: 20, w: 40, h: 21.5 },
+          alt: 'Runway forecast chart for the current window',
+        },
       },
     ],
   },
@@ -321,22 +332,36 @@ export const projects: Project[] = [
     since: '2026',
     status: 'In service',
     hero: 'graph',
-    notes: [
+    features: [
       {
+        size: 'half',
+        title: 'Manifests first',
+        body: 'DaVinci, FCPXML and EDL projects, then XMP IDs and filenames, then capture time and image similarity.',
+        stat: 'FCPXML · EDL',
+      },
+      {
+        size: 'half',
+        title: 'A human in the loop',
+        body: 'Low-confidence links wait in a review queue instead of guessing.',
+        stat: 'Review',
+      },
+      {
+        size: 'sm',
         title: 'RAW is the root',
-        body: 'Originals are immutable. Everything derived links back through the graph.',
+        body: 'Originals are never modified.',
+        stat: 'Immutable',
       },
       {
-        title: 'Links you can trust',
-        body: 'Project manifests, then XMP IDs, then capture time and image similarity.',
+        size: 'sm',
+        title: 'Trash buffer',
+        body: 'Deleted media waits before it is gone.',
+        stat: '30 days',
       },
       {
-        title: 'Review queue',
-        body: 'Low-confidence links wait for a human instead of guessing.',
-      },
-      {
-        title: 'Safe reclaim',
-        body: 'A 30-day trash buffer and BLAKE3-verified space reclaim.',
+        size: 'sm',
+        title: 'Verified reclaim',
+        body: 'Space is only freed once a hash check passes.',
+        stat: 'BLAKE3',
       },
     ],
   },

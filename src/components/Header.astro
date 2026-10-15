@@ -1,5 +1,11 @@
 ---
 import { projects } from '../data/projects';
+
+const links = [
+  ...projects.map((p) => ({ id: p.id, name: p.name })),
+  { id: 'infra', name: 'Infra' },
+  { id: 'operator', name: 'Operator' },
+];
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
@@ -10,19 +16,18 @@ import { projects } from '../data/projects';
     <a href="/" class="label !text-ink">
       S3N <span class="text-mute">/</span> Björn Hansen
     </a>
-    <ul class="label hidden gap-6 md:flex lg:hidden">
-      {projects.map((p) => (
-        <li>
-          <a href={`/#${p.id}`} class="hover:text-ink">
-            {p.name}
+    <ul class="label hidden h-full items-stretch gap-7 md:flex">
+      {links.map((l) => (
+        <li class="flex">
+          <a
+            href={`/#${l.id}`}
+            data-nav={l.id}
+            class="nav-link flex items-center border-b-2 border-transparent pt-0.5 transition-colors hover:text-ink"
+          >
+            {l.name}
           </a>
         </li>
       ))}
-      <li>
-        <a href="/#operator" class="hover:text-ink">
-          Operator
-        </a>
-      </li>
     </ul>
     <a
       class="xlink !min-h-0"

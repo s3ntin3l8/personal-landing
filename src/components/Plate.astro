@@ -1,6 +1,6 @@
 ---
 import Figure from './Figure.astro';
-import AnnotatedFigure from './AnnotatedFigure.astro';
+import FeatureBento from './FeatureBento.astro';
 import PhoneFrame from './PhoneFrame.astro';
 import BranchGraph from './BranchGraph.astro';
 import type { Project } from '../data/projects';
@@ -19,7 +19,6 @@ let figNo = 1;
 const nextFig = () => `${n}.${figNo++}`;
 
 const specs: [string, string][] = [
-  ['Part no.', p.part],
   ['Release', p.version],
   ['Stack', p.stack.join(' · ')],
   ['Runs on', p.runsOn],
@@ -32,7 +31,7 @@ const specs: [string, string][] = [
 <section
   id={p.id}
   data-plate
-  class="scroll-mt-14 px-5 pb-28 pt-6 md:px-10 md:pb-40"
+  class="scroll-mt-12 px-5 pb-28 pt-6 md:px-10 md:pb-40"
   aria-labelledby={`${p.id}-title`}
 >
   <div class="rule-draw h-px bg-line-strong"></div>
@@ -44,49 +43,49 @@ const specs: [string, string][] = [
     <span>{p.status}</span>
   </div>
 
-  <header class="mt-14 grid gap-10 lg:grid-cols-12">
-    <div class="step lg:col-span-7">
-      <div class="flex items-end gap-5">
-        <h2 id={`${p.id}-title`} class="display text-[clamp(4rem,11vw,10rem)]">
-          {p.name}
-        </h2>
-        <img
-          src={p.logo.src}
-          alt=""
-          width="48"
-          height="48"
-          class="mb-3 size-10 md:size-12"
-        />
-      </div>
-      <p class="mt-6 max-w-2xl text-2xl font-medium leading-snug md:text-3xl">
+  <header class="step mt-14">
+    <div class="flex items-end gap-5">
+      <h2 id={`${p.id}-title`} class="display text-[clamp(4rem,11vw,10rem)]">
+        {p.name}
+      </h2>
+      <img
+        src={p.logo.src}
+        alt=""
+        width="48"
+        height="48"
+        class="mb-3 size-10 md:size-12"
+      />
+    </div>
+    <div class="mt-6 grid gap-6 lg:grid-cols-12">
+      <p class="text-2xl font-medium leading-snug md:text-3xl lg:col-span-6">
         {p.fn}
       </p>
-      <p class="mt-4 max-w-2xl text-lg leading-relaxed text-mute">
-        {p.summary}
-      </p>
-      <a class="xlink mt-4" href={p.github} target="_blank" rel="noopener">
-        <span>Source on GitHub</span>
-        <i class="arrow not-italic" aria-hidden="true">
-          ↗
-        </i>
-      </a>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <p class="text-lg leading-relaxed text-mute">{p.summary}</p>
+        <a class="xlink mt-2" href={p.github} target="_blank" rel="noopener">
+          <span>Source on GitHub</span>
+          <i class="arrow not-italic" aria-hidden="true">
+            ↗
+          </i>
+        </a>
+      </div>
     </div>
 
     <dl
-      class="step self-end text-sm lg:col-span-4 lg:col-start-9"
+      class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-y border-line py-4"
       aria-label={`${p.name} specifications`}
     >
       {specs.map(([k, v]) => (
-        <div class="grid grid-cols-[6.5rem_1fr] gap-3 border-t border-line py-2.5">
-          <dt class="label pt-px">{k}</dt>
+        <div class="flex items-baseline gap-2.5">
+          <dt class="label">{k}</dt>
           <dd class="num text-[0.8125rem]">{v}</dd>
         </div>
       ))}
-      <div class="grid grid-cols-[6.5rem_1fr] gap-3 border-y border-line py-2.5">
-        <dt class="label pt-px">Accent</dt>
+      <div class="flex items-baseline gap-2.5">
+        <dt class="label">Accent</dt>
         <dd class="num flex items-center gap-2 text-[0.8125rem]">
           <span
-            class="inline-block size-3 border border-line-strong"
+            class="inline-block size-2.5 border border-line-strong"
             style={`background:${p.accent}`}
             aria-hidden="true"
           ></span>
@@ -96,7 +95,7 @@ const specs: [string, string][] = [
     </dl>
   </header>
 
-  <div class="mt-16 md:mt-24">
+  <div class="mt-16 md:mt-20">
     {p.hero === 'graph' ? (
       <Figure
         fig={nextFig()}
@@ -115,30 +114,15 @@ const specs: [string, string][] = [
     )}
   </div>
 
-  {p.detail && (
-    <div class="mt-20 md:mt-28">
-      <AnnotatedFigure fig={nextFig()} detail={p.detail} flip={flip} />
-    </div>
-  )}
-
-  {p.notes && (
-    <ol class="mt-16 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
-      {p.notes.map((note, i) => (
-        <li class="step border-t border-line pt-4 pb-6">
-          <span class="num text-sm text-signal">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <span class="mt-2 block font-semibold">{note.title}</span>
-          <span class="mt-1 block text-mute">{note.body}</span>
-        </li>
-      ))}
-    </ol>
-  )}
+  <div class="mt-6">
+    <FeatureBento features={p.features} label={`${p.name} features`} />
+  </div>
 
   {(wide.length > 0 || phones.length > 0) && (
     <div
       class:list={[
-        'mt-20 grid items-end gap-10 md:mt-28 lg:grid-cols-12',
+        'mt-20 grid gap-10 md:mt-28 lg:grid-cols-12',
+        wide.length > 0 ? 'items-end' : 'items-center',
         flip && 'lg:[direction:rtl] lg:*:[direction:ltr]',
       ]}
     >
@@ -155,8 +139,23 @@ const specs: [string, string][] = [
           ))}
         </div>
       )}
+      {phones.length > 0 && wide.length === 0 && (
+        <div class="step lg:col-span-5">
+          <h3 class="display dot-end text-[clamp(2.5rem,5vw,4.5rem)]">
+            On the phone
+          </h3>
+          <p class="mt-4 max-w-sm text-lg leading-relaxed text-mute">
+            Installable as a PWA, laid out for one hand.
+          </p>
+        </div>
+      )}
       {phones.length > 0 && (
-        <div class="flex gap-6 lg:col-span-4">
+        <div
+          class:list={[
+            'flex gap-6',
+            wide.length > 0 ? 'lg:col-span-4' : 'lg:col-span-7 lg:justify-end',
+          ]}
+        >
           {phones.map((ph) => (
             <PhoneFrame
               image={ph.image}

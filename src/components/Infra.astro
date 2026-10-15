@@ -2,6 +2,8 @@
 // Schematic of how the parts are served. Deliberately generic host names:
 // this is a public page, so no internal hostnames or addresses.
 import Figure from './Figure.astro';
+import FeatureBento from './FeatureBento.astro';
+import type { Feature } from '../data/projects';
 
 const ink = '#ece6d9';
 const mute = '#8f887a';
@@ -57,20 +59,28 @@ const links: [number, number][] = [
   [3, 9],
 ];
 
-const notes = [
+const notes: Feature[] = [
   {
+    size: 'half',
+    stat: 'Proxmox',
     title: 'Self-hosted, all of it',
     body: 'Proxmox hosts at home. A gateway passes TLS straight through to the edge that owns the name.',
   },
   {
+    size: 'half',
+    stat: '≈65 stacks',
     title: 'Infrastructure as code',
     body: 'Ansible and OpenTofu describe the hosts and roughly 65 compose stacks. Nothing is configured by hand twice.',
   },
   {
+    size: 'half',
+    stat: 'Cosign',
     title: 'Signed images',
     body: 'Shared CI with CodeQL, gitleaks and dependency review. Images for amd64 and arm64, signed with Cosign.',
   },
   {
+    size: 'half',
+    stat: 'Claude Code',
     title: 'Built with agents',
     body: 'I work with Claude Code and other agents every day, which is why Mullion exists.',
   },
@@ -79,7 +89,7 @@ const notes = [
 
 <section
   id="infra"
-  class="scroll-mt-14 px-5 pb-28 pt-6 md:px-10 md:pb-40"
+  class="scroll-mt-12 px-5 pb-28 pt-6 md:px-10 md:pb-40"
   aria-labelledby="infra-title"
 >
   <div class="rule-draw h-px bg-line-strong"></div>
@@ -164,15 +174,7 @@ const notes = [
     </Figure>
   </div>
 
-  <ol class="mt-16 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
-    {notes.map((n, i) => (
-      <li class="step border-t border-line pb-6 pt-4">
-        <span class="num text-sm text-signal">
-          {String(i + 1).padStart(2, '0')}
-        </span>
-        <span class="mt-2 block font-semibold">{n.title}</span>
-        <span class="mt-1 block text-mute">{n.body}</span>
-      </li>
-    ))}
-  </ol>
+  <div class="mt-6">
+    <FeatureBento features={notes} label="How it is run" />
+  </div>
 </section>
