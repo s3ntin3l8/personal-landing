@@ -1,0 +1,42 @@
+---
+import { projects } from '../data/projects';
+---
+
+<section class="relative isolate flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-32 text-center">
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <p class="text-sm font-medium uppercase tracking-[0.25em] text-mute">
+    Björn Hansen
+  </p>
+  <h1 class="mt-6 max-w-5xl text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl md:text-8xl">
+    Software I build
+    <br />
+    <span class="hero-gradient">for my own stack.</span>
+  </h1>
+  <p class="mt-8 max-w-2xl text-balance text-xl leading-relaxed text-mute md:text-2xl">
+    Four self-hosted apps for the things I wanted to exist. Open on GitHub,
+    running on my own hardware.
+  </p>
+
+  <ul class="mt-12 flex flex-wrap items-center justify-center gap-3">
+    {projects.map((p) => (
+      <li>
+        <a
+          href={`#${p.id}`}
+          class="pill inline-flex items-center gap-2.5 rounded-full py-2 pl-2.5 pr-5 text-sm font-medium"
+        >
+          <img src={p.logo.src} alt="" width="24" height="24" class="size-6" />
+          {p.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <a
+    href="#mullion"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm text-mute transition-colors hover:text-ink"
+    aria-label="Scroll to projects"
+  >
+    <span aria-hidden="true">↓</span>
+  </a>
+</section>

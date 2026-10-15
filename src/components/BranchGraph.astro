@@ -1,0 +1,194 @@
+---
+// Stand-in illustration for branchDAM until real screenshots are captured.
+// Nodes: RAW root -> proxy / edit / export children; one low-confidence link in the review queue.
+---
+
+<div class="overflow-hidden rounded-xl border border-white/10 bg-panel shadow-[0_40px_120px_-30px_var(--accent,#000)]">
+  <div
+    class="flex h-9 items-center gap-1.5 border-b border-white/10 bg-white/[0.03] px-4"
+    aria-hidden="true"
+  >
+    <span class="size-2.5 rounded-full bg-white/15"></span>
+    <span class="size-2.5 rounded-full bg-white/15"></span>
+    <span class="size-2.5 rounded-full bg-white/15"></span>
+  </div>
+  <svg
+    viewBox="0 0 960 600"
+    class="aspect-[16/10] w-full"
+    role="img"
+    aria-label="Illustration of a version graph: a RAW original with proxy, edit and export nodes branching from it"
+  >
+    <defs>
+      <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#ffffff" fill-opacity="0.07"></circle>
+      </pattern>
+      <linearGradient id="edge" x1="0" x2="1">
+        <stop offset="0" stop-color="#6366f1"></stop>
+        <stop offset="1" stop-color="#2ba69a"></stop>
+      </linearGradient>
+    </defs>
+    <rect width="960" height="600" fill="url(#dots)"></rect>
+
+    <g
+      fill="none"
+      stroke="url(#edge)"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    >
+      <path d="M200 300 C 290 300, 290 150, 380 150"></path>
+      <path d="M200 300 C 290 300, 290 300, 380 300"></path>
+      <path d="M200 300 C 290 300, 290 450, 380 450"></path>
+      <path d="M560 150 C 640 150, 640 110, 720 110"></path>
+      <path d="M560 300 C 640 300, 640 230, 720 230"></path>
+      <path d="M560 300 C 640 300, 640 370, 720 370"></path>
+      <path
+        d="M560 450 C 640 450, 640 490, 720 490"
+        stroke-dasharray="6 8"
+        stroke="#f59e0b"
+      ></path>
+    </g>
+
+    <g
+      font-family="'Geist Mono Variable', ui-monospace, monospace"
+      font-size="15"
+    >
+      <g transform="translate(40 262)">
+        <rect
+          width="160"
+          height="76"
+          rx="14"
+          fill="#14142a"
+          stroke="#818cf8"
+          stroke-width="2"
+        ></rect>
+        <text
+          x="80"
+          y="34"
+          text-anchor="middle"
+          fill="#c7d2fe"
+          font-weight="600"
+        >
+          IMG_4721.RAW
+        </text>
+        <text x="80" y="56" text-anchor="middle" fill="#818cf8" font-size="12">
+          original · immutable
+        </text>
+      </g>
+
+      <g transform="translate(380 112)">
+        <rect
+          width="180"
+          height="76"
+          rx="14"
+          fill="#101216"
+          stroke="#ffffff"
+          stroke-opacity="0.18"
+        ></rect>
+        <text x="90" y="34" text-anchor="middle" fill="#f5f5f7">
+          proxy.mov
+        </text>
+        <text x="90" y="56" text-anchor="middle" fill="#86868b" font-size="12">
+          h.264 · 1080p
+        </text>
+      </g>
+      <g transform="translate(380 262)">
+        <rect
+          width="180"
+          height="76"
+          rx="14"
+          fill="#101216"
+          stroke="#ffffff"
+          stroke-opacity="0.18"
+        ></rect>
+        <text x="90" y="34" text-anchor="middle" fill="#f5f5f7">
+          grade.drp
+        </text>
+        <text x="90" y="56" text-anchor="middle" fill="#86868b" font-size="12">
+          DaVinci project
+        </text>
+      </g>
+      <g transform="translate(380 412)">
+        <rect
+          width="180"
+          height="76"
+          rx="14"
+          fill="#101216"
+          stroke="#f59e0b"
+          stroke-opacity="0.6"
+        ></rect>
+        <text x="90" y="34" text-anchor="middle" fill="#f5f5f7">
+          IMG_4721-edit.jpg
+        </text>
+        <text x="90" y="56" text-anchor="middle" fill="#f59e0b" font-size="12">
+          needs review · 71%
+        </text>
+      </g>
+
+      <g transform="translate(720 72)">
+        <rect
+          width="190"
+          height="76"
+          rx="14"
+          fill="#0d1f1d"
+          stroke="#2ba69a"
+          stroke-opacity="0.7"
+        ></rect>
+        <text x="95" y="34" text-anchor="middle" fill="#99f6e4">
+          timeline.fcpxml
+        </text>
+        <text x="95" y="56" text-anchor="middle" fill="#2ba69a" font-size="12">
+          matched by manifest
+        </text>
+      </g>
+      <g transform="translate(720 192)">
+        <rect
+          width="190"
+          height="76"
+          rx="14"
+          fill="#0d1f1d"
+          stroke="#2ba69a"
+          stroke-opacity="0.7"
+        ></rect>
+        <text x="95" y="34" text-anchor="middle" fill="#99f6e4">
+          final-4k.mp4
+        </text>
+        <text x="95" y="56" text-anchor="middle" fill="#2ba69a" font-size="12">
+          export · verified
+        </text>
+      </g>
+      <g transform="translate(720 332)">
+        <rect
+          width="190"
+          height="76"
+          rx="14"
+          fill="#0d1f1d"
+          stroke="#2ba69a"
+          stroke-opacity="0.7"
+        ></rect>
+        <text x="95" y="34" text-anchor="middle" fill="#99f6e4">
+          poster.jpg
+        </text>
+        <text x="95" y="56" text-anchor="middle" fill="#2ba69a" font-size="12">
+          export · in Immich
+        </text>
+      </g>
+      <g transform="translate(720 452)">
+        <rect
+          width="190"
+          height="76"
+          rx="14"
+          fill="#1c1608"
+          stroke="#f59e0b"
+          stroke-opacity="0.6"
+          stroke-dasharray="6 6"
+        ></rect>
+        <text x="95" y="34" text-anchor="middle" fill="#fde68a">
+          IMG_4721-web.jpg
+        </text>
+        <text x="95" y="56" text-anchor="middle" fill="#f59e0b" font-size="12">
+          candidate link
+        </text>
+      </g>
+    </g>
+  </svg>
+</div>

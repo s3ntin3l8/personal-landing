@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+  --color-ink: #f5f5f7;
+  --color-mute: #86868b;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-panel: #0b0b0d;
+}
+
+html {
+  background: #000;
+  color: var(--color-ink);
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(255 255 255 / 0.25);
+}
+
+/* Per-chapter accent: set --accent / --accent2 on the section. */
+.accent-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent2, var(--accent)),
+    var(--accent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.chapter-glow {
+  position: absolute;
+  inset: -5% 0 auto 0;
+  height: 60rem;
+  max-height: 80%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      55% 55% at 50% 0%,
+      color-mix(in oklab, var(--accent) 30%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      35% 35% at 80% 20%,
+      color-mix(in oklab, var(--accent2, var(--accent)) 18%, transparent),
+      transparent 70%
+    );
+}
+
+.pill {
+  border: 1px solid var(--color-line);
+  background: rgb(255 255 255 / 0.04);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.pill:hover {
+  background: rgb(255 255 255 / 0.09);
+  border-color: rgb(255 255 255 / 0.22);
+}
+
+/* Scroll-driven reveals: pure CSS, progressive enhancement. Browsers without
+   animation-timeline (and reduced-motion users) just see the content. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes zoom {
+  from {
+    opacity: 0;
+    transform: perspective(1600px) translateY(60px) rotateX(8deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) rotate(6deg);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    .reveal-zoom {
+      animation: zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-glow {
+    animation: drift 24s ease-in-out infinite;
+  }
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(40px);
+  background:
+    radial-gradient(
+      40% 40% at 25% 30%,
+      rgb(14 159 110 / 0.35),
+      transparent 70%
+    ),
+    radial-gradient(
+      40% 40% at 75% 25%,
+      rgb(94 106 210 / 0.38),
+      transparent 70%
+    ),
+    radial-gradient(
+      35% 35% at 65% 75%,
+      rgb(217 70 239 / 0.22),
+      transparent 70%
+    ),
+    radial-gradient(35% 35% at 30% 78%, rgb(99 102 241 / 0.25), transparent 70%);
+}
+
+.hero-gradient {
+  background: linear-gradient(95deg, #34d399 0%, #818cf8 50%, #e879f9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Sticky feature walkthrough */
+.shot-stack {
+  display: grid;
+}
+.shot-stack > .shot {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: scale(0.985);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.shot-stack > .shot.is-active {
+  opacity: 1;
+  transform: none;
+}
+@media (min-width: 1024px) {
+  .feature {
+    opacity: 0.35;
+    transition: opacity 0.5s ease;
+  }
+  .feature.is-active {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shot-stack > .shot,
+  .feature {
+    transition: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}

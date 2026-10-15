@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Datenschutz · Björn Hansen"
+  description="Datenschutzerklärung"
+  noindex
+>
+  <Header />
+  <main class="mx-auto max-w-2xl px-6 pb-32 pt-36">
+    <h1 class="text-4xl font-semibold tracking-tight">Datenschutzerklärung</h1>
+    <div class="mt-10 space-y-8 leading-relaxed text-mute">
+      <section>
+        <h2 class="text-lg font-medium text-ink">Verantwortlicher</h2>
+        <p class="mt-2">
+          Björn Hansen, Kontaktdaten siehe{' '}
+          <a class="underline" href="/impressum">
+            Impressum
+          </a>
+          .
+        </p>
+      </section>
+      <section>
+        <h2 class="text-lg font-medium text-ink">
+          Was diese Website nicht tut
+        </h2>
+        <p class="mt-2">
+          Diese Website setzt keine Cookies, verwendet keine Analyse- oder
+          Tracking-Dienste und lädt keine Schriften oder Skripte von
+          Drittanbietern. Es gibt keine Formulare.
+        </p>
+      </section>
+      <section>
+        <h2 class="text-lg font-medium text-ink">Server-Logfiles</h2>
+        <p class="mt-2">
+          Beim Aufruf werden technisch notwendige Daten verarbeitet (IP-Adresse,
+          Zeitpunkt, aufgerufene Seite, Browserkennung), um die Seite
+          auszuliefern und den Betrieb abzusichern. Rechtsgrundlage ist Art. 6
+          Abs. 1 lit. f DSGVO. Die Website läuft auf einem eigenen Server in
+          Deutschland. [TODO: Speicherdauer der Logs eintragen]
+        </p>
+      </section>
+      <section>
+        <h2 class="text-lg font-medium text-ink">Cloudflare</h2>
+        <p class="mt-2">
+          Die Domain wird über Cloudflare (Cloudflare, Inc., USA) als
+          Reverse-Proxy und DNS-Dienst betrieben. Dabei verarbeitet Cloudflare
+          Verbindungsdaten wie die IP-Adresse, um die Seite auszuliefern und vor
+          Angriffen zu schützen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        </p>
+      </section>
+      <section>
+        <h2 class="text-lg font-medium text-ink">Externe Links</h2>
+        <p class="mt-2">
+          Links zu GitHub und LinkedIn sind einfache Verweise. Erst nach einem
+          Klick werden Daten an die jeweiligen Anbieter übertragen; es gelten
+          deren Datenschutzbestimmungen.
+        </p>
+      </section>
+      <section>
+        <h2 class="text-lg font-medium text-ink">Ihre Rechte</h2>
+        <p class="mt-2">
+          Sie haben das Recht auf Auskunft, Berichtigung, Löschung,
+          Einschränkung der Verarbeitung, Widerspruch und Datenübertragbarkeit
+          sowie auf Beschwerde bei einer Datenschutzaufsichtsbehörde.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

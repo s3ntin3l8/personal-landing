@@ -1,0 +1,104 @@
+---
+const timeline = [
+  {
+    when: '2024 – now',
+    role: 'Project Management Procurement, Interior, Infotainment & Digital Experiences',
+    org: 'CARIAD · Ingolstadt',
+  },
+  {
+    when: '2023 – now',
+    role: 'Project Management Procurement, Connect & Cloud',
+    org: 'CARIAD · Ingolstadt',
+  },
+  {
+    when: '2019 – 2023',
+    role: 'Project Management Procurement, next-gen A4/A5 and A6 families',
+    org: 'AUDI AG · Ingolstadt',
+  },
+  {
+    when: '2016 – 2018',
+    role: 'Procurement Officer',
+    org: 'Audi China · Changchun',
+  },
+  {
+    when: '2013 – 2016',
+    role: 'Project Coordination Procurement China',
+    org: 'AUDI AG · Ingolstadt and Changchun',
+  },
+];
+---
+
+<section
+  id="about"
+  class="border-t border-white/5 py-28 md:py-40"
+  aria-labelledby="about-title"
+>
+  <div class="mx-auto grid max-w-6xl gap-16 px-6 lg:grid-cols-2 lg:gap-24">
+    <div class="reveal">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-mute">
+        About
+      </p>
+      <h2
+        id="about-title"
+        class="mt-4 text-balance text-4xl font-semibold tracking-tight md:text-5xl"
+      >
+        Procurement by day.
+        <br />
+        <span class="hero-gradient">Builder by night.</span>
+      </h2>
+      <div class="mt-8 space-y-5 text-lg leading-relaxed text-mute">
+        <p>
+          I'm Björn, based in Ingolstadt, Germany. By day I manage procurement
+          for software and cloud programs at CARIAD, the Volkswagen Group's
+          automotive software company.
+        </p>
+        <p>
+          Before that I spent ten years at Audi, running procurement for the
+          A4/A5 and A6 families and working in Changchun, China, with the joint
+          venture.
+        </p>
+        <p>
+          By night I build the tools I wish existed: dashboards, trackers and
+          asset managers that I host myself and keep public on GitHub.
+        </p>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a
+          href="https://github.com/s3ntin3l8"
+          target="_blank"
+          rel="noopener"
+          class="pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
+        >
+          GitHub <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/bjoernhansen"
+          target="_blank"
+          rel="noopener"
+          class="pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
+        >
+          LinkedIn <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <ol class="relative space-y-9 border-l border-white/10 pl-8">
+        {timeline.map((t) => (
+          <li class="relative">
+            <span
+              class="absolute -left-[2.45rem] top-2 size-2.5 rounded-full bg-white/30 ring-4 ring-black"
+              aria-hidden="true"
+            />
+            <p class="font-mono text-sm text-mute">{t.when}</p>
+            <p class="mt-1 text-lg font-medium leading-snug">{t.role}</p>
+            <p class="mt-0.5 text-mute">{t.org}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-12 text-sm text-mute">
+        Education: Hult International Business School
+      </p>
+    </div>
+  </div>
+</section>

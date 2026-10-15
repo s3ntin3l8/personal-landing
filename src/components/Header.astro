@@ -1,0 +1,36 @@
+---
+import { projects } from '../data/projects';
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/60 backdrop-blur-xl backdrop-saturate-150">
+  <nav
+    class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6"
+    aria-label="Main"
+  >
+    <a href="/" class="text-sm font-semibold tracking-tight">
+      Björn Hansen
+    </a>
+    <ul class="hidden items-center gap-7 text-sm text-mute md:flex">
+      {projects.map((p) => (
+        <li>
+          <a href={`/#${p.id}`} class="transition-colors hover:text-ink">
+            {p.name}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href="/#about" class="transition-colors hover:text-ink">
+          About
+        </a>
+      </li>
+    </ul>
+    <a
+      href="https://github.com/s3ntin3l8"
+      target="_blank"
+      rel="noopener"
+      class="pill rounded-full px-4 py-1.5 text-sm font-medium"
+    >
+      GitHub
+    </a>
+  </nav>
+</header>
