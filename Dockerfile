@@ -4,7 +4,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+# Short commit for the colophon; CI passes it, local builds show "dev".
+ARG GIT_SHA=""
+RUN GIT_SHA="$GIT_SHA" npm run build
 
 FROM nginxinc/nginx-unprivileged:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf

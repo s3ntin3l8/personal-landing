@@ -1,21 +1,47 @@
-// Generates public/og.png (1200x630). Run: node scripts/make-og.mjs
-import sharp from 'sharp';
+// Renders public/og.png (1200x630) in the catalogue style with the site's own
+// fonts. Run: node scripts/make-og.mjs
+// Needs a Chromium: set CHROMIUM_PATH, or install one with
+// `npx playwright-core install chromium-headless-shell`.
+import { readFileSync } from 'node:fs';
+import { chromium } from 'playwright-core';
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs>
-    <radialGradient id="a" cx="20%" cy="25%" r="45%"><stop offset="0" stop-color="#0e9f6e" stop-opacity=".55"/><stop offset="1" stop-color="#0e9f6e" stop-opacity="0"/></radialGradient>
-    <radialGradient id="b" cx="80%" cy="20%" r="45%"><stop offset="0" stop-color="#5e6ad2" stop-opacity=".6"/><stop offset="1" stop-color="#5e6ad2" stop-opacity="0"/></radialGradient>
-    <radialGradient id="c" cx="70%" cy="90%" r="45%"><stop offset="0" stop-color="#d946ef" stop-opacity=".35"/><stop offset="1" stop-color="#d946ef" stop-opacity="0"/></radialGradient>
-    <linearGradient id="t" x1="0" x2="1"><stop offset="0" stop-color="#34d399"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#e879f9"/></linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="#000"/>
-  <rect width="1200" height="630" fill="url(#a)"/><rect width="1200" height="630" fill="url(#b)"/><rect width="1200" height="630" fill="url(#c)"/>
-  <text x="80" y="170" font-family="Helvetica, Arial, sans-serif" font-size="26" letter-spacing="6" fill="#86868b">BJÖRN HANSEN</text>
-  <text x="80" y="300" font-family="Helvetica, Arial, sans-serif" font-size="88" font-weight="700" fill="#f5f5f7">Software I build</text>
-  <text x="80" y="402" font-family="Helvetica, Arial, sans-serif" font-size="88" font-weight="700" fill="url(#t)">for my own stack.</text>
-  <text x="80" y="520" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#86868b">Mullion · Pocket · Runway · branchDAM</text>
-</svg>`;
+const font = (path) =>
+  `data:font/woff2;base64,${readFileSync(new URL(`../node_modules/${path}`, import.meta.url)).toString('base64')}`;
 
-await sharp(Buffer.from(svg))
-  .png({ compressionLevel: 9 })
-  .toFile('public/og.png');
+const parts = [
+  ['S3N-01', 'Mullion'],
+  ['S3N-02', 'Pocket'],
+  ['S3N-03', 'Runway'],
+  ['S3N-04', 'branchDAM'],
+];
+
+const html = `<!doctype html><html><head><style>
+@font-face { font-family: Archivo; src: url(${font('@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2')}) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
+@font-face { font-family: Plex; src: url(${font('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2')}) format('woff2'); }
+* { margin: 0; box-sizing: border-box; }
+body { width: 1200px; height: 630px; background: #0e0d0b; color: #ece6d9; font-family: Archivo; padding: 48px 64px; position: relative; }
+.label { font-family: Plex; font-size: 17px; letter-spacing: .04em; text-transform: uppercase; color: #8f887a; }
+.row { display: flex; justify-content: space-between; }
+.rule { height: 1px; background: rgb(236 230 217 / .32); margin: 14px 0 0; }
+h1 { margin-top: 48px; font-size: 150px; line-height: .86; font-stretch: 62%; font-weight: 760; text-transform: uppercase; }
+h1 i { font-style: normal; color: #ff4f00; }
+.bom { position: absolute; left: 64px; right: 64px; bottom: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.bom div { border-top: 1px solid rgb(236 230 217 / .32); padding-top: 12px; }
+.bom b { display: block; margin-top: 6px; font-size: 30px; font-weight: 600; }
+svg { position: absolute; right: 64px; top: 112px; }
+</style></head><body>
+<div class="row label"><span>S3N / Björn Hansen</span><span>Catalogue · s3ntin3l8.de</span></div>
+<div class="rule"></div>
+<svg width="72" height="72" viewBox="0 0 64 64"><circle cx="32" cy="32" r="14" fill="none" stroke="#ff4f00"/><path d="M32 6V58M6 32H58" stroke="#ff4f00"/></svg>
+<h1>Software for<br/>my own rack<i>.</i></h1>
+<div class="bom">${parts.map(([no, name]) => `<div><span class="label">${no}</span><b>${name}</b></div>`).join('')}</div>
+</body></html>`;
+
+const browser = await chromium.launch({
+  executablePath: process.env.CHROMIUM_PATH,
+});
+const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+await page.setContent(html);
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: 'public/og.png' });
+await browser.close();

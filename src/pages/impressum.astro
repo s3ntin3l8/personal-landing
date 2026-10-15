@@ -6,11 +6,15 @@ import Footer from '../components/Footer.astro';
 
 <Base title="Impressum · Björn Hansen" description="Impressum" noindex>
   <Header />
-  <main class="mx-auto max-w-2xl px-6 pb-32 pt-36">
-    <h1 class="text-4xl font-semibold tracking-tight">Impressum</h1>
-    <div class="mt-10 space-y-8 leading-relaxed text-mute">
+  <main lang="de" class="max-w-3xl px-5 pb-32 pt-16 md:px-10">
+    <h1 class="display hyphens-auto text-[clamp(3rem,9vw,7rem)] break-words">
+      Impressum
+    </h1>
+    <div class="mt-12 space-y-10 leading-relaxed text-mute">
       <section>
-        <h2 class="text-lg font-medium text-ink">Angaben gemäß § 5 DDG</h2>
+        <h2 class="label border-t border-line pt-3 !text-ink">
+          Angaben gemäß § 5 DDG
+        </h2>
         <p class="mt-2">
           Björn Hansen
           <br />
@@ -22,16 +26,19 @@ import Footer from '../components/Footer.astro';
         </p>
       </section>
       <section>
-        <h2 class="text-lg font-medium text-ink">Kontakt</h2>
+        <h2 class="label border-t border-line pt-3 !text-ink">Kontakt</h2>
         <p class="mt-2">
           E-Mail:
-          <a class="underline" href="mailto:admin@s3ntin3l8.de">
+          <a
+            class="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-signal"
+            href="mailto:admin@s3ntin3l8.de"
+          >
             admin@s3ntin3l8.de
           </a>
         </p>
       </section>
       <section>
-        <h2 class="text-lg font-medium text-ink">
+        <h2 class="label border-t border-line pt-3 !text-ink">
           Haftung für Inhalte und Links
         </h2>
         <p class="mt-2">

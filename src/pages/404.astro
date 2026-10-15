@@ -6,11 +6,13 @@ import Footer from '../components/Footer.astro';
 
 <Base title="Not found · Björn Hansen" description="Page not found" noindex>
   <Header />
-  <main class="mx-auto flex min-h-svh max-w-2xl flex-col items-start justify-center px-6">
-    <p class="font-mono text-sm text-mute">404</p>
-    <h1 class="mt-3 text-5xl font-semibold tracking-tight">Nothing here.</h1>
-    <a href="/" class="pill mt-8 rounded-full px-5 py-2.5 text-sm font-medium">
-      Back to the start
+  <main class="flex min-h-[70svh] flex-col justify-center px-5 py-24 md:px-10">
+    <p class="label">Error 404 · Part not in catalogue</p>
+    <h1 class="display mt-6 text-[clamp(4rem,14vw,12rem)]">
+      Nothing here<span class="text-signal">.</span>
+    </h1>
+    <a href="/" class="xlink mt-8">
+      <span>Back to the index</span>
     </a>
   </main>
   <Footer />

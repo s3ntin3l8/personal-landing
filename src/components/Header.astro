@@ -2,35 +2,38 @@
 import { projects } from '../data/projects';
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/60 backdrop-blur-xl backdrop-saturate-150">
+<header class="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
   <nav
-    class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6"
+    class="flex h-12 items-center justify-between gap-6 px-5 md:px-10"
     aria-label="Main"
   >
-    <a href="/" class="text-sm font-semibold tracking-tight">
-      Björn Hansen
+    <a href="/" class="label !text-ink">
+      S3N <span class="text-mute">/</span> Björn Hansen
     </a>
-    <ul class="hidden items-center gap-7 text-sm text-mute md:flex">
+    <ul class="label hidden gap-6 md:flex lg:hidden">
       {projects.map((p) => (
         <li>
-          <a href={`/#${p.id}`} class="transition-colors hover:text-ink">
+          <a href={`/#${p.id}`} class="hover:text-ink">
             {p.name}
           </a>
         </li>
       ))}
       <li>
-        <a href="/#about" class="transition-colors hover:text-ink">
-          About
+        <a href="/#operator" class="hover:text-ink">
+          Operator
         </a>
       </li>
     </ul>
     <a
+      class="xlink !min-h-0"
       href="https://github.com/s3ntin3l8"
       target="_blank"
       rel="noopener"
-      class="pill rounded-full px-4 py-1.5 text-sm font-medium"
     >
-      GitHub
+      <span>GitHub</span>
+      <i class="arrow not-italic" aria-hidden="true">
+        ↗
+      </i>
     </a>
   </nav>
 </header>

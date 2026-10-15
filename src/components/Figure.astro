@@ -1,0 +1,48 @@
+---
+// A catalogue figure: hairline frame, crop marks, mono caption.
+// Pass `image` for a screenshot, or use the default slot for SVG/video.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  fig: string;
+  caption: string;
+  image?: ImageMetadata;
+  alt?: string;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const {
+  fig,
+  caption,
+  image,
+  alt = '',
+  sizes = '(min-width: 1280px) 1100px, 100vw',
+  eager = false,
+  class: className,
+} = Astro.props;
+---
+
+<figure class:list={['step', className]}>
+  <div class="cropmarks border border-line bg-raised">
+    {image ? (
+      <Image
+        src={image}
+        alt={alt}
+        widths={[640, 960, 1280, 1600, 2200]}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : 'auto'}
+        class="block h-auto w-full"
+      />
+    ) : (
+      <slot />
+    )}
+  </div>
+  <figcaption class="mt-3 flex gap-4 text-sm text-mute">
+    <span class="label shrink-0 text-ink">Fig. {fig}</span>
+    <span>{caption}</span>
+  </figcaption>
+</figure>

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.jpg';
 
-const timeline = [
+const ledger = [
   {
     when: '2024 – now',
     role: 'Project Management Procurement, Interior, Infotainment & Digital Experiences',
@@ -29,98 +29,147 @@ const timeline = [
     org: 'AUDI AG · Ingolstadt and Changchun',
   },
 ];
+
+const sheet: [string, string][] = [
+  ['Name', 'Björn Hansen'],
+  ['Based', 'Near Ingolstadt, DE'],
+  ['Day job', 'Procurement project management, CARIAD'],
+  ['Night job', 'Self-hosted software, S3N-01 to 04'],
+  ['Education', 'Hult International Business School'],
+];
 ---
 
 <section
-  id="about"
-  class="border-t border-white/5 py-28 md:py-40"
-  aria-labelledby="about-title"
+  id="operator"
+  class="scroll-mt-14 px-5 pb-28 pt-6 md:px-10 md:pb-40"
+  aria-labelledby="operator-title"
 >
-  <div class="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
-    <div class="reveal lg:sticky lg:top-28 lg:self-start">
-      <div class="relative isolate mx-auto max-w-sm lg:max-w-none">
-        <div
-          class="absolute -inset-6 -z-10 rounded-[3rem] bg-gradient-to-br from-emerald-500/30 via-indigo-500/25 to-fuchsia-500/25 blur-3xl"
-          aria-hidden="true"
-        ></div>
-        <Image
-          src={portrait}
-          alt="Portrait of Björn Hansen sitting at his desk"
-          widths={[480, 640, 768]}
-          sizes="(min-width: 1024px) 480px, 384px"
-          loading="lazy"
-          class="aspect-[4/5] w-full rounded-3xl border border-white/10 object-cover"
-        />
-      </div>
-    </div>
+  <div class="rule-draw h-px bg-line-strong"></div>
+  <div class="label mt-3 flex justify-between">
+    <span>Plate 06</span>
+    <span>Operator</span>
+  </div>
 
-    <div>
-      <div class="reveal">
-        <p class="text-sm font-medium uppercase tracking-[0.2em] text-mute">
-          About
+  <div class="mt-14 grid gap-12 lg:grid-cols-12">
+    <figure class="step lg:col-span-4">
+      <div class="cropmarks border border-line">
+        <div class="portrait relative overflow-hidden">
+          <Image
+            src={portrait}
+            alt="Portrait of Björn Hansen sitting at his desk"
+            widths={[480, 640, 768]}
+            sizes="(min-width: 1024px) 30vw, 100vw"
+            loading="lazy"
+            class="block aspect-[4/5] w-full object-cover"
+          />
+        </div>
+      </div>
+      <figcaption class="mt-3 flex gap-4 text-sm text-mute">
+        <span class="label shrink-0 text-ink">Fig. 6.1</span>
+        <span>The operator, at the desk.</span>
+      </figcaption>
+    </figure>
+
+    <div class="lg:col-span-7 lg:col-start-6">
+      <h2
+        id="operator-title"
+        class="display step text-[clamp(3.5rem,8vw,7.5rem)]"
+      >
+        Procurement by day<span class="text-signal">.</span>
+        <br />
+        Builder by night<span class="text-signal">.</span>
+      </h2>
+
+      <div class="step mt-10 max-w-2xl space-y-5 text-lg leading-relaxed">
+        <p>
+          I’m Björn, based near Ingolstadt, Germany. By day I manage procurement
+          for software and cloud programs at CARIAD, the Volkswagen Group’s
+          automotive software company.
         </p>
-        <h2
-          id="about-title"
-          class="mt-4 text-balance text-4xl font-semibold tracking-tight md:text-5xl"
+        <p class="text-mute">
+          Before that I spent ten years at Audi, running procurement for the
+          A4/A5 and A6 families and working in Changchun, China, with the joint
+          venture. By night I build the tools I wish existed, host them myself
+          and keep them public on GitHub.
+        </p>
+      </div>
+
+      <dl class="step mt-12 grid sm:grid-cols-2 sm:gap-x-10">
+        {sheet.map(([k, v]) => (
+          <div class="grid grid-cols-[6.5rem_1fr] gap-3 border-t border-line py-2.5">
+            <dt class="label pt-px">{k}</dt>
+            <dd class="text-[0.9375rem]">{v}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="mt-6 flex flex-wrap gap-x-6">
+        <a
+          class="xlink"
+          href="https://github.com/s3ntin3l8"
+          target="_blank"
+          rel="noopener"
         >
-          Procurement by day.
-          <br />
-          <span class="hero-gradient">Builder by night.</span>
-        </h2>
-        <div class="mt-8 space-y-5 text-lg leading-relaxed text-mute">
-          <p>
-            I'm Björn, based near Ingolstadt, Germany. By day I manage
-            procurement for software and cloud programs at CARIAD, the
-            Volkswagen Group's automotive software company.
-          </p>
-          <p>
-            Before that I spent ten years at Audi, running procurement for the
-            A4/A5 and A6 families and working in Changchun, China, with the
-            joint venture.
-          </p>
-          <p>
-            By night I build the tools I wish existed: dashboards, trackers and
-            asset managers that I host myself and keep public on GitHub.
-          </p>
-        </div>
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a
-            href="https://github.com/s3ntin3l8"
-            target="_blank"
-            rel="noopener"
-            class="pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
-          >
-            GitHub <span aria-hidden="true">→</span>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/bjoernhansen"
-            target="_blank"
-            rel="noopener"
-            class="pill inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
-          >
-            LinkedIn <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="reveal mt-16">
-        <ol class="relative space-y-9 border-l border-white/10 pl-8">
-          {timeline.map((t) => (
-            <li class="relative">
-              <span
-                class="absolute -left-[2.45rem] top-2 size-2.5 rounded-full bg-white/30 ring-4 ring-black"
-                aria-hidden="true"
-              />
-              <p class="font-mono text-sm text-mute">{t.when}</p>
-              <p class="mt-1 text-lg font-medium leading-snug">{t.role}</p>
-              <p class="mt-0.5 text-mute">{t.org}</p>
-            </li>
-          ))}
-        </ol>
-        <p class="mt-12 text-sm text-mute">
-          Education: Hult International Business School
-        </p>
+          <span>GitHub</span>
+          <i class="arrow not-italic" aria-hidden="true">
+            ↗
+          </i>
+        </a>
+        <a
+          class="xlink"
+          href="https://www.linkedin.com/in/bjoernhansen"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>LinkedIn</span>
+          <i class="arrow not-italic" aria-hidden="true">
+            ↗
+          </i>
+        </a>
       </div>
     </div>
   </div>
+
+  <div class="mt-20 overflow-x-auto">
+    <table class="w-full min-w-[40rem] border-collapse text-left">
+      <caption class="label mb-3 text-left">Service record</caption>
+      <thead>
+        <tr class="label border-y border-line-strong">
+          <th scope="col" class="w-36 py-2.5 pr-4 font-normal">
+            Period
+          </th>
+          <th scope="col" class="py-2.5 pr-4 font-normal">
+            Role
+          </th>
+          <th scope="col" class="py-2.5 font-normal">
+            Organisation
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {ledger.map((l) => (
+          <tr class="step border-b border-line align-baseline">
+            <td class="num py-4 pr-4 text-sm text-mute">{l.when}</td>
+            <td class="py-4 pr-4 font-medium">{l.role}</td>
+            <td class="py-4 text-mute">{l.org}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 </section>
+
+<style>
+  /* Warm monochrome: grayscale, then multiplied with bone. */
+  .portrait img {
+    filter: grayscale(1) contrast(1.12) brightness(0.92);
+  }
+  .portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ece6d9;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+</style>

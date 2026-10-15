@@ -1,6 +1,7 @@
 ---
-import '@fontsource-variable/geist';
-import '@fontsource-variable/geist-mono';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
 import '../styles/global.css';
 
 interface Props {
@@ -20,7 +21,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#0e0d0b" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -33,10 +34,10 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
-  <body class="min-h-svh bg-black antialiased">
+  <body class="min-h-svh bg-paper">
     <slot />
     <script>
-      import '../scripts/walkthrough';
+      import '../scripts/rail';
     </script>
   </body>
 </html>

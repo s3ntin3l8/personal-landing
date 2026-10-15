@@ -1,26 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import IndexRail from '../components/IndexRail.astro';
 import Hero from '../components/Hero.astro';
-import ProjectChapter from '../components/ProjectChapter.astro';
-import HowIRunIt from '../components/HowIRunIt.astro';
+import Plate from '../components/Plate.astro';
+import Infra from '../components/Infra.astro';
 import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
 import { projects } from '../data/projects';
 ---
 
 <Base
-  title="Björn Hansen · Self-hosted software"
-  description="Mullion, Pocket, Runway and branchDAM: four self-hosted apps built by Björn Hansen. Open on GitHub."
+  title="Björn Hansen · A catalogue of self-hosted software"
+  description="Mullion, Pocket, Runway and branchDAM: four self-hosted apps built by Björn Hansen, with specs, annotated screenshots and source on GitHub."
 >
   <Header />
-  <main>
-    <Hero />
-    {projects.map((project) => (
-      <ProjectChapter project={project} />
-    ))}
-    <HowIRunIt />
-    <About />
-  </main>
-  <Footer />
+  <div class="lg:grid lg:grid-cols-[14rem_minmax(0,1fr)]">
+    <IndexRail />
+    <div class="min-w-0">
+      <main>
+        <Hero />
+        {projects.map((project, i) => (
+          <Plate project={project} index={i} />
+        ))}
+        <Infra />
+        <About />
+      </main>
+      <Footer />
+    </div>
+  </div>
 </Base>

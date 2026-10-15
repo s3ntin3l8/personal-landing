@@ -1,0 +1,178 @@
+---
+// Schematic of how the parts are served. Deliberately generic host names:
+// this is a public page, so no internal hostnames or addresses.
+import Figure from './Figure.astro';
+
+const ink = '#ece6d9';
+const mute = '#8f887a';
+const signal = '#ff4f00';
+
+type Box = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  t: string;
+  s: string;
+  hot?: boolean;
+};
+const boxes: Box[] = [
+  { x: 20, y: 200, w: 150, h: 70, t: 'Cloudflare', s: 'DNS · proxy' },
+  {
+    x: 230,
+    y: 200,
+    w: 170,
+    h: 70,
+    t: 'Gateway',
+    s: 'Traefik · L4 SNI',
+    hot: true,
+  },
+  { x: 470, y: 90, w: 180, h: 70, t: 'Edge · dev host', s: 'Traefik · TLS' },
+  { x: 470, y: 310, w: 180, h: 70, t: 'Edge · app host', s: 'Traefik · TLS' },
+  { x: 720, y: 40, w: 200, h: 44, t: 'S3N-01 Mullion', s: '' },
+  { x: 720, y: 96, w: 200, h: 44, t: 'S3N-02 Pocket', s: '' },
+  { x: 720, y: 152, w: 200, h: 44, t: 'S3N-03 Runway', s: '' },
+  { x: 720, y: 290, w: 200, h: 44, t: 'S3N-04 branchDAM', s: '' },
+  { x: 720, y: 346, w: 200, h: 44, t: 'Authentik SSO', s: '' },
+  { x: 720, y: 402, w: 200, h: 44, t: 's3ntin3l8.de', s: '', hot: true },
+];
+const mid = (b: Box) => b.y + b.h / 2;
+const link = (a: number, b: number) => {
+  const s = boxes[a];
+  const t = boxes[b];
+  const x1 = s.x + s.w;
+  const x2 = t.x;
+  const mx = (x1 + x2) / 2;
+  return `M${x1} ${mid(s)} H${mx} V${mid(t)} H${x2}`;
+};
+const links: [number, number][] = [
+  [0, 1],
+  [1, 2],
+  [1, 3],
+  [2, 4],
+  [2, 5],
+  [2, 6],
+  [3, 7],
+  [3, 8],
+  [3, 9],
+];
+
+const notes = [
+  {
+    title: 'Self-hosted, all of it',
+    body: 'Proxmox hosts at home. A gateway passes TLS straight through to the edge that owns the name.',
+  },
+  {
+    title: 'Infrastructure as code',
+    body: 'Ansible and OpenTofu describe the hosts and roughly 65 compose stacks. Nothing is configured by hand twice.',
+  },
+  {
+    title: 'Signed images',
+    body: 'Shared CI with CodeQL, gitleaks and dependency review. Images for amd64 and arm64, signed with Cosign.',
+  },
+  {
+    title: 'Built with agents',
+    body: 'I work with Claude Code and other agents every day, which is why Mullion exists.',
+  },
+];
+---
+
+<section
+  id="infra"
+  class="scroll-mt-14 px-5 pb-28 pt-6 md:px-10 md:pb-40"
+  aria-labelledby="infra-title"
+>
+  <div class="rule-draw h-px bg-line-strong"></div>
+  <div class="label mt-3 flex justify-between">
+    <span>Plate 05</span>
+    <span>Infrastructure</span>
+  </div>
+
+  <div class="mt-14 grid gap-10 lg:grid-cols-12">
+    <h2
+      id="infra-title"
+      class="display step text-[clamp(3.5rem,8vw,7.5rem)] lg:col-span-7"
+    >
+      How it is served
+    </h2>
+    <p class="step self-end text-lg leading-relaxed text-mute lg:col-span-4 lg:col-start-9">
+      Every part on this page runs on hardware in my house. This is the path a
+      request takes, including the one that loaded this page.
+    </p>
+  </div>
+
+  <div class="mt-16">
+    <Figure
+      fig="5.1"
+      caption="Request path, simplified. Orange: the hop this page took."
+    >
+      <svg
+        viewBox="0 0 940 470"
+        class="block w-full"
+        role="img"
+        aria-label="Cloudflare forwards to a gateway Traefik, which passes TLS through to two edge Traefik instances. The dev host serves Mullion, Pocket and Runway; the app host serves branchDAM, Authentik and this website."
+      >
+        <g fill="none" stroke-width="1.25">
+          {links.map(([a, b]) => {
+            const onPath =
+              (a === 0 && b === 1) ||
+              (a === 1 && b === 3) ||
+              (a === 3 && b === 9);
+            return (
+              <path
+                d={link(a, b)}
+                stroke={onPath ? signal : ink}
+                stroke-opacity={onPath ? 1 : 0.45}
+              />
+            );
+          })}
+        </g>
+        <g font-family="'IBM Plex Mono', ui-monospace, monospace">
+          {boxes.map((b) => (
+            <g transform={`translate(${b.x} ${b.y})`}>
+              <rect
+                width={b.w}
+                height={b.h}
+                fill="#0e0d0b"
+                stroke={b.hot ? signal : ink}
+                stroke-opacity={b.hot ? 1 : 0.45}
+              />
+              <text x="12" y={b.s ? 30 : 27} fill={ink} font-size="13">
+                {b.t}
+              </text>
+              {b.s && (
+                <text x="12" y="50" fill={mute} font-size="11">
+                  {b.s}
+                </text>
+              )}
+            </g>
+          ))}
+        </g>
+        <g
+          font-family="'IBM Plex Mono', ui-monospace, monospace"
+          font-size="11"
+          fill={mute}
+        >
+          <text x="20" y="20">
+            PUBLIC
+          </text>
+          <text x="470" y="20">
+            HOMELAB · PROXMOX
+          </text>
+        </g>
+      </svg>
+    </Figure>
+  </div>
+
+  <ol class="mt-16 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
+    {notes.map((n, i) => (
+      <li class="step border-t border-line pb-6 pt-4">
+        <span class="num text-sm text-signal">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <span class="mt-2 block font-semibold">{n.title}</span>
+        <span class="mt-1 block text-mute">{n.body}</span>
+      </li>
+    ))}
+  </ol>
+</section>

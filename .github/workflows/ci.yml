@@ -37,4 +37,6 @@ jobs:
     with:
       image-name: 's3ntin3l8/${{ github.event.repository.name }}'
       push-edge: ${{ github.event_name == 'push' }}
+      build-args: |
+        GIT_SHA=${{ github.sha }}
     secrets: inherit

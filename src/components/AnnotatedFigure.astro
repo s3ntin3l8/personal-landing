@@ -1,0 +1,87 @@
+---
+// The signature figure: a tight crop of a screenshot with numbered markers,
+// each tied to a legend entry. Markers are given in percent of the source
+// image, so the same data still works when the crop is re-tuned.
+import { Image } from 'astro:assets';
+import type { Detail } from '../data/projects';
+
+interface Props {
+  fig: string;
+  detail: Detail;
+  /** Put the legend left of the image instead of right. */
+  flip?: boolean;
+}
+
+const { fig, detail, flip = false } = Astro.props;
+const { crop, image } = detail;
+
+// Crop via CSS: scale the image up and shift it so only the crop rect shows.
+const frameAspect = (crop.w * image.width) / (crop.h * image.height);
+const imgStyle = [
+  `width:${(100 / crop.w) * 100}%`,
+  `left:${(-crop.x / crop.w) * 100}%`,
+  `top:${(-crop.y / crop.h) * 100}%`,
+].join(';');
+
+const markers = detail.markers.map((m, i) => ({
+  ...m,
+  n: i + 1,
+  left: ((m.x - crop.x) / crop.w) * 100,
+  top: ((m.y - crop.y) / crop.h) * 100,
+}));
+---
+
+<figure
+  class="annotated grid gap-x-10 gap-y-8 lg:grid-cols-12"
+  aria-label={`Figure ${fig}: ${detail.caption}`}
+>
+  <div class:list={['step lg:col-span-8', flip && 'lg:order-2 lg:col-start-5']}>
+    <div class="cropmarks border border-line bg-raised">
+      <div
+        class="relative overflow-hidden"
+        style={`aspect-ratio:${frameAspect.toFixed(4)}`}
+      >
+        <Image
+          src={image}
+          alt={detail.alt}
+          widths={[1280, 1920, 2560]}
+          sizes="(min-width: 1024px) 66vw, 200vw"
+          loading="lazy"
+          class="absolute max-w-none"
+          style={imgStyle}
+        />
+        {markers.map((m) => (
+          <span
+            class="marker"
+            data-marker={m.n}
+            style={`left:${m.left.toFixed(2)}%;top:${m.top.toFixed(2)}%`}
+            aria-hidden="true"
+          >
+            {m.n}
+          </span>
+        ))}
+      </div>
+    </div>
+    <p class="mt-3 flex gap-4 text-sm text-mute">
+      <span class="label shrink-0 text-ink">Fig. {fig}</span>
+      <span>{detail.caption}</span>
+    </p>
+  </div>
+
+  <ol class:list={['lg:col-span-4', flip && 'lg:order-1']}>
+    {markers.map((m) => (
+      <li
+        class="step grid grid-cols-[2rem_1fr] gap-3 border-t border-line py-4 first:border-t-0 first:pt-0"
+        data-legend={m.n}
+      >
+        <span class="num pt-0.5 text-sm text-signal">
+          {String(m.n).padStart(2, '0')}
+        </span>
+        <span>
+          <span class="block font-semibold">{m.title}</span>
+          <span class="mt-1 block text-mute">{m.body}</span>
+        </span>
+      </li>
+    ))}
+  </ol>
+</figure>
