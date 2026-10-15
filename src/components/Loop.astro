@@ -1,0 +1,30 @@
+---
+// A short, silent screen recording. Loads nothing until it scrolls into view
+// (preload="none" + poster), plays only while visible (src/scripts/loops.ts),
+// and under reduced motion stays on the poster with native controls.
+interface Props {
+  /** Path without extension under public/, e.g. "/media/mullion-terminal-stream". */
+  src: string;
+  label: string;
+  width: number;
+  height: number;
+}
+
+const { src, label, width, height } = Astro.props;
+---
+
+<video
+  data-loop
+  class="block h-auto w-full"
+  muted
+  loop
+  playsinline
+  preload="none"
+  poster={`${src}.jpg`}
+  width={width}
+  height={height}
+  aria-label={label}
+>
+  <source src={`${src}.webm`} type="video/webm" />
+  <source src={`${src}.mp4`} type="video/mp4" />
+</video>

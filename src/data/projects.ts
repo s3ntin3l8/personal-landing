@@ -5,24 +5,42 @@ import pocketLogo from '../assets/logos/pocket.svg';
 import runwayLogo from '../assets/logos/runway.svg';
 import branchdamLogo from '../assets/logos/branchdam.svg';
 
+// Every capture below comes from the app's own reproducible demo pipeline
+// (`make screenshots-landing` in each repo, synthetic data only), synced by
+// `npm run assets:sync`; src/data/assets.manifest.json records the commits.
 import mullionDashboard from '../assets/shots/mullion/desktop-dashboard.png';
-import mullionKanban from '../assets/shots/mullion/desktop-kanban.png';
 import mullionGit from '../assets/shots/mullion/desktop-git-panel.png';
-import mullionMobileList from '../assets/shots/mullion/mobile-session-list.png';
+import mullionKanban from '../assets/shots/mullion/desktop-kanban.png';
 import mullionMobileTerminal from '../assets/shots/mullion/mobile-terminal.png';
+import mullionMobileList from '../assets/shots/mullion/mobile-session-list.png';
 
-import pocketHoldings from '../assets/shots/pocket/holdings-dark-wide.png';
-import pocketInsights from '../assets/shots/pocket/insights-dark-wide.png';
-import pocketTax from '../assets/shots/pocket/tax-dark-wide.png';
-import pocketHoldingsNarrow from '../assets/shots/pocket/holdings-dark-narrow.png';
-import pocketInsightsNarrow from '../assets/shots/pocket/insights-dark-narrow.png';
+import pocketHoldings from '../assets/shots/pocket/holdings-desktop.png';
+import pocketInsights from '../assets/shots/pocket/insights-desktop.png';
+import pocketTax from '../assets/shots/pocket/tax-desktop.png';
+import pocketHoldingsMobile from '../assets/shots/pocket/holdings-mobile.png';
+import pocketInsightsMobile from '../assets/shots/pocket/insights-mobile.png';
 
-import runwayDashboard from '../assets/shots/runway/dashboard.png';
-import runwayProvider from '../assets/shots/runway/provider.png';
-import runwayHistory from '../assets/shots/runway/history.png';
+import runwayDashboard from '../assets/shots/runway/dashboard-desktop.png';
+import runwayProvider from '../assets/shots/runway/provider-desktop.png';
+import runwayDashboardMobile from '../assets/shots/runway/dashboard-mobile.png';
+
+import branchdamGraph from '../assets/shots/branchdam/asset-graph-desktop.png';
+import branchdamAssets from '../assets/shots/branchdam/assets-desktop.png';
+import branchdamAudit from '../assets/shots/branchdam/audit-queue-desktop.png';
+import branchdamAssetsMobile from '../assets/shots/branchdam/assets-mobile.png';
 
 export interface Shot {
   image: ImageMetadata;
+  alt: string;
+  caption: string;
+}
+
+/** A short silent screen recording in public/media (see Loop.astro). */
+export interface LoopShot {
+  /** Path without extension, e.g. "/media/mullion-terminal-stream". */
+  src: string;
+  width: number;
+  height: number;
   alt: string;
   caption: string;
 }
@@ -66,13 +84,16 @@ export interface Project {
   license: string;
   since: string;
   status: string;
-  /** Fig. N.1. 'graph' is the line-drawing stand-in until real captures exist. */
-  hero: Shot | 'graph';
+  /** Fig. N.1. */
+  hero: Shot | LoopShot;
   /** Bento tiles, in grid order. */
   features: Feature[];
-  /** Secondary figures: wide shots or phones. */
-  extras?: (Shot & { kind: 'wide' | 'phone' })[];
+  /** Secondary figures: a loop and/or phones. */
+  loop?: LoopShot;
+  phones?: Shot[];
 }
+
+export const isLoop = (s: Shot | LoopShot): s is LoopShot => 'src' in s;
 
 export const projects: Project[] = [
   {
@@ -93,71 +114,71 @@ export const projects: Project[] = [
     since: '2026',
     status: 'In service',
     hero: {
-      image: mullionDashboard,
-      alt: 'Mullion dashboard with an agent session next to the project sidebar',
-      caption: 'Workspace with a live agent session and the project sidebar.',
+      src: '/media/mullion-terminal-stream',
+      width: 1600,
+      height: 1000,
+      alt: 'An agent session streaming into a Mullion terminal next to the project sidebar',
+      caption: 'An agent at work, live in the dashboard.',
     },
     features: [
       {
         size: 'lg',
-        title: 'Git, beside the agent',
-        body: 'Branch, changes and worktrees in a panel next to every session, with auto-fetch while agents work.',
+        title: 'Every agent CLI, one tab',
+        body: 'Claude Code, Codex, opencode and friends, each on a real PTY kept alive under dtach, so sessions survive redeploys and closed tabs.',
         shot: {
-          image: mullionGit,
-          crop: { x: 15.5, y: 12, w: 31, h: 34 },
-          alt: 'Mullion git panel open over a terminal session',
+          image: mullionDashboard,
+          crop: { x: 18, y: 4, w: 44, h: 48 },
+          alt: 'Claude Code running inside a Mullion terminal',
         },
       },
       {
         size: 'sm',
         title: 'Workspaces that stay',
-        body: 'Saved layouts. Sessions survive redeploys and closed tabs.',
+        body: 'Saved layouts you can switch between.',
         shot: {
           image: mullionDashboard,
-          crop: { x: 0, y: 4, w: 15, h: 11 },
+          crop: { x: 0, y: 4, w: 18, h: 15 },
           alt: 'Mullion workspace switcher',
         },
       },
       {
         size: 'sm',
         title: 'Who needs you',
-        body: 'Attention, working and exited, at a glance.',
+        body: 'Attention, working and exited, per project.',
         shot: {
           image: mullionDashboard,
-          crop: { x: 0, y: 25, w: 15, h: 19 },
+          crop: { x: 0, y: 20, w: 18, h: 31 },
           alt: 'Mullion session filters and per-project sessions',
         },
       },
       {
         size: 'half',
-        title: 'Any agent CLI',
-        body: 'Claude Code, Codex, opencode and friends, each on a real PTY kept alive under dtach.',
+        title: 'Git, beside the agent',
+        body: 'Branch and changes in a drawer next to every session.',
         shot: {
-          image: mullionDashboard,
-          crop: { x: 15, y: 7, w: 33, h: 32 },
-          alt: 'Claude Code running inside a Mullion terminal',
+          image: mullionGit,
+          crop: { x: 76, y: 4, w: 24, h: 22 },
+          alt: 'Mullion git drawer next to a terminal',
         },
       },
       {
         size: 'half',
         title: 'Tasks agents can take',
-        body: 'A Kanban board from backlog to done that agents pick work from.',
+        body: 'A board from backlog to done that agents pick work from.',
         shot: {
           image: mullionKanban,
-          crop: { x: 15.5, y: 10, w: 36.5, h: 35 },
-          alt: 'Mullion Task Master Kanban board',
+          crop: { x: 18, y: 6, w: 38, h: 32 },
+          alt: 'Mullion Task Master board',
         },
       },
     ],
-    extras: [
+    phones: [
       {
-        kind: 'phone',
         image: mullionMobileTerminal,
         alt: 'Mullion terminal on a phone',
         caption: 'Terminal with key bar.',
       },
       {
-        kind: 'phone',
         image: mullionMobileList,
         alt: 'Mullion session list on a phone',
         caption: 'Sessions on the go.',
@@ -183,7 +204,7 @@ export const projects: Project[] = [
     status: 'In service',
     hero: {
       image: pocketHoldings,
-      alt: 'Pocket holdings overview in dark mode',
+      alt: 'Pocket holdings with portfolio value, positions and allocation',
       caption: 'Holdings across every asset class and currency.',
     },
     features: [
@@ -193,7 +214,7 @@ export const projects: Project[] = [
         body: 'Abgeltungsteuer and the Freistellungsauftrag for Germany, the final-tax regime for Indonesia.',
         shot: {
           image: pocketTax,
-          crop: { x: 24.3, y: 14.5, w: 30.2, h: 23 },
+          crop: { x: 16, y: 18, w: 61, h: 42 },
           alt: 'Pocket tax report with estimated tax and allowance usage',
         },
       },
@@ -209,41 +230,46 @@ export const projects: Project[] = [
         body: 'Equities, gold, bonds, funds and cash, across currencies.',
         shot: {
           image: pocketHoldings,
-          crop: { x: 24.5, y: 37.5, w: 17.5, h: 12.5 },
+          crop: { x: 80, y: 68, w: 20, h: 32 },
           alt: 'Pocket allocation donut by asset class',
         },
       },
       {
         size: 'lg',
         title: 'Returns that make sense',
-        body: 'Money-weighted XIRR, time-weighted return, and drift from your target weights with a hint for each class.',
+        body: 'Money-weighted XIRR, year-by-year returns against the S&P 500, and drift from your target weights.',
         shot: {
           image: pocketInsights,
-          crop: { x: 24, y: 10.5, w: 35.5, h: 34.5 },
-          alt: 'Pocket insights with annualised return and rebalancing',
+          crop: { x: 15.5, y: 7, w: 63, h: 93 },
+          alt: 'Pocket insights with annualised return, rebalancing and yearly returns',
         },
       },
       {
         size: 'sm',
-        title: 'A year at a glance',
-        body: 'Portfolio value from one day to all time, with live IDX prices.',
+        title: 'Years at a glance',
+        body: 'Portfolio value from a month to all time, against a benchmark.',
         shot: {
           image: pocketHoldings,
-          crop: { x: 24.3, y: 12, w: 35.7, h: 24 },
+          crop: { x: 16, y: 8, w: 45, h: 29 },
           alt: 'Pocket portfolio value chart',
         },
       },
     ],
-    extras: [
+    loop: {
+      src: '/media/pocket-holdings-range',
+      width: 1600,
+      height: 1000,
+      alt: 'Pocket holdings chart switching between ranges',
+      caption: 'Ranges from a month to all time.',
+    },
+    phones: [
       {
-        kind: 'phone',
-        image: pocketHoldingsNarrow,
+        image: pocketHoldingsMobile,
         alt: 'Pocket holdings on a phone',
         caption: 'Holdings.',
       },
       {
-        kind: 'phone',
-        image: pocketInsightsNarrow,
+        image: pocketInsightsMobile,
         alt: 'Pocket insights on a phone',
         caption: 'Insights.',
       },
@@ -267,18 +293,18 @@ export const projects: Project[] = [
     since: '2026',
     status: 'In service',
     hero: {
-      image: runwayHistory,
-      alt: 'Runway history page with usage over seven days',
-      caption: 'Usage history for every quota window.',
+      image: runwayDashboard,
+      alt: 'Runway home with at-risk quotas, usage value and every provider',
+      caption: 'Every provider, with what is at risk on top.',
     },
     features: [
       {
         size: 'full',
         title: 'Fifteen providers. One glance',
-        body: 'Claude, Gemini, ChatGPT, Copilot, OpenRouter, Ollama and more, each with remaining capacity and a reset timer.',
+        body: 'Claude, ChatGPT, Gemini, Copilot, Ollama, OpenCode and more, each with remaining capacity and a reset timer.',
         shot: {
           image: runwayDashboard,
-          crop: { x: 17.5, y: 41, w: 80.5, h: 56 },
+          crop: { x: 16, y: 57, w: 82, h: 36 },
           alt: 'Runway provider cards with usage bars and reset timers',
         },
       },
@@ -288,8 +314,8 @@ export const projects: Project[] = [
         body: 'What is exhausted, or about to be, comes first.',
         shot: {
           image: runwayDashboard,
-          crop: { x: 17.5, y: 11.5, w: 26.5, h: 16.5 },
-          alt: 'Runway at-risk card for an exhausted quota',
+          crop: { x: 16, y: 10, w: 26, h: 18 },
+          alt: 'Runway at-risk card for a nearly exhausted quota',
         },
       },
       {
@@ -298,19 +324,33 @@ export const projects: Project[] = [
         body: 'Every window shows where usage should be right now, and where it will land at the reset.',
         shot: {
           image: runwayProvider,
-          crop: { x: 17.5, y: 20, w: 40, h: 21.5 },
+          crop: { x: 16, y: 43, w: 41, h: 28 },
           alt: 'Runway quota windows with pace markers and projections',
         },
       },
       {
         size: 'sm',
         title: 'Forecasts',
-        body: 'A Theil-Sen trend to the end of every window.',
+        body: 'A robust trend to the end of every window.',
         shot: {
           image: runwayProvider,
-          crop: { x: 58, y: 20, w: 40, h: 21.5 },
+          crop: { x: 57, y: 43, w: 42, h: 28 },
           alt: 'Runway forecast chart for the current window',
         },
+      },
+    ],
+    loop: {
+      src: '/media/runway-provider-tabs',
+      width: 1600,
+      height: 1000,
+      alt: 'Runway provider detail stepping through its tabs',
+      caption: 'Activity, sessions and cost for every provider.',
+    },
+    phones: [
+      {
+        image: runwayDashboardMobile,
+        alt: 'Runway home on a phone',
+        caption: 'At risk, on the go.',
       },
     ],
   },
@@ -331,25 +371,28 @@ export const projects: Project[] = [
     license: 'AGPL-3.0',
     since: '2026',
     status: 'In service',
-    hero: 'graph',
+    hero: {
+      image: branchdamGraph,
+      alt: 'branchDAM lineage graph: a RAW with its camera JPEG, graded export, edit decision list and proxy',
+      caption:
+        'One RAW, everything derived from it, with the confidence of every link.',
+    },
     features: [
       {
-        size: 'half',
-        title: 'Manifests first',
-        body: 'DaVinci, FCPXML and EDL projects, then XMP IDs and filenames, then capture time and image similarity.',
-        stat: 'FCPXML · EDL',
-      },
-      {
-        size: 'half',
-        title: 'A human in the loop',
-        body: 'Low-confidence links wait in a review queue instead of guessing.',
-        stat: 'Review',
+        size: 'lg',
+        title: 'Every file, indexed',
+        body: 'RAWs, exports, proxies and project files, each with its camera, lifecycle and place in the graph.',
+        shot: {
+          image: branchdamAssets,
+          crop: { x: 15, y: 30, w: 45, h: 68 },
+          alt: 'branchDAM asset list with thumbnails and graph status',
+        },
       },
       {
         size: 'sm',
-        title: 'RAW is the root',
-        body: 'Originals are never modified.',
-        stat: 'Immutable',
+        title: 'Manifests first',
+        body: 'Edit lists and project files are the strongest evidence.',
+        stat: 'EDL · FCPXML',
       },
       {
         size: 'sm',
@@ -358,10 +401,34 @@ export const projects: Project[] = [
         stat: '30 days',
       },
       {
-        size: 'sm',
+        size: 'half',
+        title: 'A human in the loop',
+        body: 'Links below the auto-accept threshold wait in a review queue instead of guessing.',
+        shot: {
+          image: branchdamAudit,
+          crop: { x: 15, y: 20, w: 62, h: 30 },
+          alt: 'branchDAM audit queue with a link candidate and its matching metrics',
+        },
+      },
+      {
+        size: 'half',
         title: 'Verified reclaim',
-        body: 'Space is only freed once a hash check passes.',
+        body: 'Space is only freed once a BLAKE3 hash check passes.',
         stat: 'BLAKE3',
+      },
+    ],
+    loop: {
+      src: '/media/branchdam-asset-graph',
+      width: 1600,
+      height: 1000,
+      alt: 'From the branchDAM asset list into an asset and its lineage graph',
+      caption: 'From the library into an asset’s graph.',
+    },
+    phones: [
+      {
+        image: branchdamAssetsMobile,
+        alt: 'branchDAM asset list on a phone',
+        caption: 'Installable as a PWA.',
       },
     ],
   },

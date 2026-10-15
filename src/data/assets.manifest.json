@@ -1,0 +1,75 @@
+{
+  "pocket": {
+    "commit": "45a6829c",
+    "capturedAt": "2026-10-15",
+    "files": [
+      "activity-desktop.png",
+      "activity-mobile.png",
+      "holdings-desktop.png",
+      "holdings-mobile.png",
+      "holdings-range.jpg",
+      "holdings-range.mp4",
+      "holdings-range.webm",
+      "insights-desktop.png",
+      "insights-mobile.png",
+      "reports-desktop.png",
+      "reports-mobile.png",
+      "tax-desktop.png",
+      "tax-mobile.png"
+    ]
+  },
+  "mullion": {
+    "commit": "b56d948a",
+    "capturedAt": "2026-10-15",
+    "files": [
+      "desktop-dashboard.png",
+      "desktop-git-panel.png",
+      "desktop-kanban.png",
+      "mobile-session-list.png",
+      "mobile-terminal.png",
+      "terminal-stream.jpg",
+      "terminal-stream.mp4",
+      "terminal-stream.webm"
+    ]
+  },
+  "runway": {
+    "commit": "82a3b371",
+    "capturedAt": "2026-10-15",
+    "files": [
+      "dashboard-desktop.png",
+      "dashboard-mobile.png",
+      "fleet-desktop.png",
+      "fleet-mobile.png",
+      "history-desktop.png",
+      "history-mobile.png",
+      "provider-activity-desktop.png",
+      "provider-activity-mobile.png",
+      "provider-desktop.png",
+      "provider-mobile.png",
+      "provider-tabs.jpg",
+      "provider-tabs.mp4",
+      "provider-tabs.webm"
+    ]
+  },
+  "branchdam": {
+    "commit": "bb211a3",
+    "capturedAt": "2026-10-15",
+    "files": [
+      "asset-detail-desktop.png",
+      "asset-detail-mobile.png",
+      "asset-graph-desktop.png",
+      "asset-graph-mobile.png",
+      "asset-graph.jpg",
+      "asset-graph.mp4",
+      "asset-graph.webm",
+      "assets-desktop.png",
+      "assets-mobile.png",
+      "audit-queue-desktop.png",
+      "audit-queue-mobile.png",
+      "jobs-desktop.png",
+      "jobs-mobile.png",
+      "storage-health-desktop.png",
+      "storage-health-mobile.png"
+    ]
+  }
+}
