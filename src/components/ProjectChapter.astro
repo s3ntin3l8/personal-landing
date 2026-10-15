@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { project: p } = Astro.props;
-const hasShots = p.features.some((f) => f.shot);
+const hasShots = p.features.every((f) => f.shot);
 const shotFeatures = p.features.filter((f) => f.shot);
 ---
 
