@@ -6,15 +6,20 @@ document
   .forEach((el) => links.set(el.dataset.nav!, el));
 
 if (links.size > 0) {
+  let active: string | null = null;
   const observer = new IntersectionObserver(
     (entries) => {
+      let next = active;
       for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        links.forEach((el, id) => {
-          if (id === entry.target.id) el.setAttribute('aria-current', 'true');
-          else el.removeAttribute('aria-current');
-        });
+        const id = entry.target.id;
+        if (entry.isIntersecting) next = id;
+        // Leaving without a successor (e.g. back up into the hero) clears it.
+        else if (id === next) next = null;
       }
+      if (next === active) return;
+      if (active) links.get(active)?.removeAttribute('aria-current');
+      if (next) links.get(next)?.setAttribute('aria-current', 'true');
+      active = next;
     },
     { rootMargin: '-50% 0px -50% 0px' },
   );
