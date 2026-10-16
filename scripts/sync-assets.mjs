@@ -41,9 +41,15 @@ for (const id of selected)
   if (!APPS[id]) throw new Error(`unknown app "${id}"`);
 
 const manifestPath = path.join(ROOT, 'src/data/assets.manifest.json');
-const manifest = existsSync(manifestPath)
-  ? JSON.parse(await readFile(manifestPath, 'utf8'))
-  : {};
+// Read without a separate existence check, so nothing can swap the file
+// between the check and the read (CodeQL js/file-system-race).
+const manifest = await readFile(manifestPath, 'utf8').then(
+  JSON.parse,
+  (err) => {
+    if (err.code === 'ENOENT') return {};
+    throw err;
+  },
+);
 
 for (const id of selected) {
   const { repo, env } = APPS[id];
