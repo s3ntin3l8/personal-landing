@@ -1,7 +1,8 @@
 ---
 // A short, silent screen recording. Loads nothing until it scrolls into view
 // (preload="none" + poster), plays only while visible (src/scripts/loops.ts),
-// and under reduced motion stays on the poster with native controls.
+// and under reduced motion stays on the poster. The loops run past five
+// seconds, so a pause toggle is always offered (WCAG 2.2.2).
 interface Props {
   /** Path without extension under public/, e.g. "/media/mullion-terminal-stream". */
   src: string;
@@ -13,18 +14,27 @@ interface Props {
 const { src, label, width, height } = Astro.props;
 ---
 
-<video
-  data-loop
-  class="block h-auto w-full"
-  muted
-  loop
-  playsinline
-  preload="none"
-  poster={`${src}.jpg`}
-  width={width}
-  height={height}
-  aria-label={label}
->
-  <source src={`${src}.webm`} type="video/webm" />
-  <source src={`${src}.mp4`} type="video/mp4" />
-</video>
+<div class="relative">
+  <video
+    data-loop
+    class="block h-auto w-full"
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={`${src}.jpg`}
+    width={width}
+    height={height}
+    aria-label={label}
+  >
+    <source src={`${src}.webm`} type="video/webm" />
+    <source src={`${src}.mp4`} type="video/mp4" />
+  </video>
+  <button
+    type="button"
+    data-loop-toggle
+    class="bg-paper/80 text-ink hover:text-signal absolute right-2 bottom-2 min-h-11 cursor-pointer px-3 font-mono text-xs tracking-wide uppercase backdrop-blur-sm"
+  >
+    [ <span data-loop-state>Pause</span> ]
+  </button>
+</div>

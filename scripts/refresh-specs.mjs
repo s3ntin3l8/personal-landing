@@ -18,9 +18,13 @@ const gh = (path) => {
   try {
     return execFileSync('gh', ['api', path, '--jq', '.tag_name'], {
       encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
     }).trim();
-  } catch {
-    return '';
+  } catch (err) {
+    // Only "this repo has no release yet" is expected; auth or network
+    // failures must not pass silently as "no release".
+    if (String(err.stderr).includes('HTTP 404')) return '';
+    throw err;
   }
 };
 
@@ -32,7 +36,13 @@ for (const [id, repo] of Object.entries(repos)) {
   }
   // Replace the first `version:` after this project's `id:`.
   const start = src.indexOf(`id: '${id}'`);
-  const at = src.indexOf('version:', start);
+  const at = start < 0 ? -1 : src.indexOf('version:', start);
+  if (at < 0) {
+    console.warn(
+      `${id}: no \`id: '${id}'\` / \`version:\` in ${file}; skipping`,
+    );
+    continue;
+  }
   const end = src.indexOf('\n', at);
   src = `${src.slice(0, at)}version: '${tag}',${src.slice(end)}`;
   console.log(`${id}: ${tag}`);

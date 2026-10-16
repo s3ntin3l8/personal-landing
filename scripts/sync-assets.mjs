@@ -66,7 +66,10 @@ for (const id of selected) {
   });
   if (res.status !== 0) {
     await rm(out, { recursive: true, force: true });
-    throw new Error(`${id}: make screenshots-landing failed`);
+    throw new Error(
+      `${id}: make screenshots-landing failed` +
+        (res.error ? `: ${res.error.message}` : ` (exit ${res.status})`),
+    );
   }
 
   const files = await readdir(out);
@@ -96,10 +99,11 @@ for (const id of selected) {
     capturedAt: new Date().toISOString().slice(0, 10),
     files,
   };
+  // Written per app, so a later app's failure can't leave files on disk that
+  // the manifest doesn't account for.
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`[sync] ${id}: ${files.length} files from ${commit}`);
 }
-
-await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
 // Keep only the stills the page actually imports; the rest of each capture set
 // stays reproducible from the app repos and needn't live in this one.
