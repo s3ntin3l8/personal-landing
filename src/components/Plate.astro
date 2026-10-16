@@ -1,0 +1,170 @@
+---
+import Figure from './Figure.astro';
+import FeatureBento from './FeatureBento.astro';
+import PhoneFrame from './PhoneFrame.astro';
+import Loop from './Loop.astro';
+import { isLoop, type Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project: p, index } = Astro.props;
+const n = index + 1;
+const flip = index % 2 === 1;
+const phones = p.phones ?? [];
+let figNo = 1;
+const nextFig = () => `${n}.${figNo++}`;
+
+const specs: [string, string][] = [
+  ['Release', p.version],
+  ['Stack', p.stack.join(' · ')],
+  ['Runs on', p.runsOn],
+  ['Auth', p.auth],
+  ['Licence', p.license],
+  ['Since', p.since],
+];
+---
+
+<section
+  id={p.id}
+  data-plate
+  class="scroll-mt-12 px-5 pb-28 pt-6 md:px-10 md:pb-40"
+  aria-labelledby={`${p.id}-title`}
+>
+  <div class="rule-draw h-px bg-line-strong"></div>
+  <div class="label mt-3 flex justify-between">
+    <span>Plate {String(n).padStart(2, '0')}</span>
+    <span class="hidden sm:inline">
+      {p.part} · {p.name}
+    </span>
+    <span>{p.status}</span>
+  </div>
+
+  <header class="step mt-14">
+    <div class="flex items-end gap-5">
+      <h2 id={`${p.id}-title`} class="display text-[clamp(4rem,11vw,10rem)]">
+        {p.name}
+      </h2>
+      <img
+        src={p.logo.src}
+        alt=""
+        width="48"
+        height="48"
+        class="mb-3 size-10 md:size-12"
+      />
+    </div>
+    <div class="mt-6 grid gap-6 lg:grid-cols-12">
+      <p class="text-2xl font-medium leading-snug md:text-3xl lg:col-span-6">
+        {p.fn}
+      </p>
+      <div class="lg:col-span-5 lg:col-start-8">
+        <p class="text-lg leading-relaxed text-mute">{p.summary}</p>
+        <a class="xlink mt-2" href={p.github} target="_blank" rel="noopener">
+          <span>Source on GitHub</span>
+          <i class="arrow not-italic" aria-hidden="true">
+            ↗
+          </i>
+        </a>
+      </div>
+    </div>
+
+    <dl
+      class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-y border-line py-4"
+      aria-label={`${p.name} specifications`}
+    >
+      {specs.map(([k, v]) => (
+        <div class="flex items-baseline gap-2.5">
+          <dt class="label">{k}</dt>
+          <dd class="num text-[0.8125rem]">{v}</dd>
+        </div>
+      ))}
+      <div class="flex items-baseline gap-2.5">
+        <dt class="label">Accent</dt>
+        <dd class="num flex items-center gap-2 text-[0.8125rem]">
+          <span
+            class="inline-block size-2.5 border border-line-strong"
+            style={`background:${p.accent}`}
+            aria-hidden="true"
+          ></span>
+          {p.accent.toUpperCase()}
+        </dd>
+      </div>
+    </dl>
+  </header>
+
+  <div class="mt-16 md:mt-20">
+    {isLoop(p.hero) ? (
+      <Figure fig={nextFig()} caption={p.hero.caption}>
+        <Loop
+          src={p.hero.src}
+          label={p.hero.alt}
+          width={p.hero.width}
+          height={p.hero.height}
+        />
+      </Figure>
+    ) : (
+      <Figure
+        fig={nextFig()}
+        caption={p.hero.caption}
+        image={p.hero.image}
+        alt={p.hero.alt}
+        eager={index === 0}
+      />
+    )}
+  </div>
+
+  <div class="mt-6">
+    <FeatureBento features={p.features} label={`${p.name} features`} />
+  </div>
+
+  {(p.loop || phones.length > 0) && (
+    <div
+      class:list={[
+        'mt-20 grid gap-10 md:mt-28 lg:grid-cols-12',
+        p.loop ? 'items-end' : 'items-center',
+        flip && 'lg:[direction:rtl] lg:*:[direction:ltr]',
+      ]}
+    >
+      {p.loop ? (
+        <div class={phones.length > 0 ? 'lg:col-span-8' : 'lg:col-span-12'}>
+          <Figure fig={nextFig()} caption={p.loop.caption}>
+            <Loop
+              src={p.loop.src}
+              label={p.loop.alt}
+              width={p.loop.width}
+              height={p.loop.height}
+            />
+          </Figure>
+        </div>
+      ) : (
+        <div class="step lg:col-span-5">
+          <h3 class="display dot-end text-[clamp(2.5rem,5vw,4.5rem)]">
+            On the phone
+          </h3>
+          <p class="mt-4 max-w-sm text-lg leading-relaxed text-mute">
+            Installable as a PWA, laid out for one hand.
+          </p>
+        </div>
+      )}
+      {phones.length > 0 && (
+        <div
+          class:list={[
+            'flex gap-6',
+            p.loop ? 'lg:col-span-4' : 'lg:col-span-7 lg:justify-end',
+          ]}
+        >
+          {phones.map((ph) => (
+            <PhoneFrame
+              image={ph.image}
+              alt={ph.alt}
+              fig={nextFig()}
+              caption={ph.caption}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )}
+</section>

@@ -1,0 +1,74 @@
+---
+// Feature tiles in a 6-column bento grid. Each tile is a headline, one
+// sentence, and either a zoomed crop of a screenshot or a big stat.
+import Crop from './Crop.astro';
+import type { Feature } from '../data/projects';
+
+interface Props {
+  features: Feature[];
+  label: string;
+}
+
+const { features, label } = Astro.props;
+
+const span: Record<Feature['size'], string> = {
+  lg: 'sm:col-span-2 lg:col-span-4 lg:row-span-2',
+  full: 'sm:col-span-2 lg:col-span-6',
+  half: 'lg:col-span-3',
+  sm: 'lg:col-span-2',
+};
+// Crop sources are huge relative to a tile, so `sizes` only needs to cover
+// the scaled-up image width, roughly tile width / crop width.
+const cropSizes = (f: Feature) => {
+  const tileVw = { lg: 60, full: 90, half: 45, sm: 30 }[f.size];
+  const scale = 100 / (f.shot?.crop.w ?? 100);
+  return `(min-width: 1024px) ${Math.round(tileVw * scale)}vw, ${Math.round(100 * scale)}vw`;
+};
+const strip = (t: string) => t.replace(/[.!]$/, '');
+---
+
+<ul
+  class="grid grid-flow-dense gap-4 sm:grid-cols-2 lg:grid-cols-6"
+  aria-label={label}
+>
+  {features.map((f, i) => (
+    <li
+      class:list={[
+        'tile step flex flex-col overflow-hidden rounded-md border border-line bg-raised',
+        span[f.size],
+      ]}
+    >
+      <div class="p-7 md:p-9">
+        <span class="num text-xs text-mute">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3
+          class:list={[
+            'display dot-end mt-4',
+            f.size === 'lg' || f.size === 'full'
+              ? 'text-[clamp(2.25rem,4vw,3.5rem)]'
+              : 'text-[clamp(1.9rem,2.6vw,2.6rem)]',
+          ]}
+        >
+          {strip(f.title)}
+        </h3>
+        <p class="mt-4 max-w-xl leading-relaxed text-mute">{f.body}</p>
+      </div>
+      {f.stat && (
+        <p class="display mt-auto px-7 pb-8 text-[clamp(2.75rem,5vw,4.5rem)] md:px-9">
+          {f.stat}
+        </p>
+      )}
+      {f.shot && (
+        <div class="ml-7 mt-auto overflow-hidden rounded-tl-md border-l border-t border-line md:ml-9">
+          <Crop
+            image={f.shot.image}
+            crop={f.shot.crop}
+            alt={f.shot.alt}
+            sizes={cropSizes(f)}
+          />
+        </div>
+      )}
+    </li>
+  ))}
+</ul>

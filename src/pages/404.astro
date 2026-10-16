@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Not found · Björn Hansen" description="Page not found" noindex>
+  <Header />
+  <main class="flex min-h-[70svh] flex-col justify-center px-5 py-24 md:px-10">
+    <p class="label">Error 404 · Part not in catalogue</p>
+    <h1 class="display mt-6 text-[clamp(4rem,14vw,12rem)]">
+      Nothing here<span class="text-signal">.</span>
+    </h1>
+    <a href="/" class="xlink mt-8">
+      <span>Back to the index</span>
+    </a>
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,44 @@
+---
+import { projects } from '../data/projects';
+
+const links = [
+  ...projects.map((p) => ({ id: p.id, name: p.name })),
+  { id: 'infra', name: 'Infra' },
+  { id: 'operator', name: 'Operator' },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
+  <nav
+    class="flex h-12 items-center justify-between gap-6 px-5 md:px-10"
+    aria-label="Main"
+  >
+    <a href="/" class="label !text-ink">
+      S3N <span class="text-mute">/</span> Björn Hansen
+    </a>
+    <ul class="label hidden h-full items-stretch gap-7 md:flex">
+      {links.map((l) => (
+        <li class="flex">
+          <a
+            href={`/#${l.id}`}
+            data-nav={l.id}
+            class="nav-link flex items-center border-b-2 border-transparent pt-0.5 transition-colors hover:text-ink"
+          >
+            {l.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      class="xlink !min-h-0"
+      href="https://github.com/s3ntin3l8"
+      target="_blank"
+      rel="noopener"
+    >
+      <span>GitHub</span>
+      <i class="arrow not-italic" aria-hidden="true">
+        ↗
+      </i>
+    </a>
+  </nav>
+</header>

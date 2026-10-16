@@ -1,0 +1,37 @@
+---
+// Shows one rectangle of a screenshot by scaling the image up and shifting
+// it inside an overflow-hidden frame with the crop's aspect ratio.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { Crop } from '../data/projects';
+
+interface Props {
+  image: ImageMetadata;
+  crop: Crop;
+  alt: string;
+  sizes?: string;
+}
+
+const { image, crop, alt, sizes = '100vw' } = Astro.props;
+const aspect = (crop.w * image.width) / (crop.h * image.height);
+const style = [
+  `width:${(100 / crop.w) * 100}%`,
+  `left:${(-crop.x / crop.w) * 100}%`,
+  `top:${(-crop.y / crop.h) * 100}%`,
+].join(';');
+---
+
+<div
+  class="relative overflow-hidden"
+  style={`aspect-ratio:${aspect.toFixed(4)}`}
+>
+  <Image
+    src={image}
+    alt={alt}
+    widths={[1280, 1920, 2560]}
+    sizes={sizes}
+    loading="lazy"
+    class="absolute max-w-none"
+    style={style}
+  />
+</div>
