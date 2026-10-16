@@ -27,7 +27,8 @@ import runwayDashboardMobile from '../assets/shots/runway/dashboard-mobile.png';
 import branchdamGraph from '../assets/shots/branchdam/asset-graph-desktop.png';
 import branchdamAssets from '../assets/shots/branchdam/assets-desktop.png';
 import branchdamAudit from '../assets/shots/branchdam/audit-queue-desktop.png';
-import branchdamAssetsMobile from '../assets/shots/branchdam/assets-mobile.png';
+import branchdamAuditPhone from '../assets/shots/branchdam-mobile/audit-queue.png';
+import branchdamSyncPhone from '../assets/shots/branchdam-mobile/sync-status.png';
 
 export interface Shot {
   image: ImageMetadata;
@@ -426,9 +427,14 @@ export const projects: Project[] = [
     },
     phones: [
       {
-        image: branchdamAssetsMobile,
-        alt: 'branchDAM asset list on a phone',
-        caption: 'Installable as a PWA.',
+        image: branchdamAuditPhone,
+        alt: 'branchDAM Android app reviewing a suggested edit link between a photo and its edited copy',
+        caption: 'Lineage audit, on Android.',
+      },
+      {
+        image: branchdamSyncPhone,
+        alt: 'branchDAM Android app showing a completed backup sync',
+        caption: 'Camera roll backup.',
       },
     ],
   },
