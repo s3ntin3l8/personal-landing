@@ -1,7 +1,7 @@
 {
   "pocket": {
-    "commit": "e67eef51",
-    "capturedAt": "2026-10-16",
+    "commit": "c58fb832",
+    "capturedAt": "2026-10-20",
     "files": [
       "activity-desktop.png",
       "activity-mobile.png",
@@ -19,8 +19,8 @@
     ]
   },
   "mullion": {
-    "commit": "cfa28f0f",
-    "capturedAt": "2026-10-16",
+    "commit": "98c3f051",
+    "capturedAt": "2026-10-20",
     "files": [
       "desktop-dashboard.png",
       "desktop-git-panel.png",
@@ -33,8 +33,8 @@
     ]
   },
   "runway": {
-    "commit": "dd6bb8b7",
-    "capturedAt": "2026-10-16",
+    "commit": "1e9d8523",
+    "capturedAt": "2026-10-20",
     "files": [
       "dashboard-desktop.png",
       "dashboard-mobile.png",
@@ -52,8 +52,8 @@
     ]
   },
   "branchdam": {
-    "commit": "7370097",
-    "capturedAt": "2026-10-16",
+    "commit": "198cf84",
+    "capturedAt": "2026-10-20",
     "files": [
       "asset-detail-desktop.png",
       "asset-detail-mobile.png",
@@ -73,8 +73,8 @@
     ]
   },
   "branchdam-mobile": {
-    "commit": "6ec49fb",
-    "capturedAt": "2026-10-16",
+    "commit": "8ff0e89",
+    "capturedAt": "2026-10-20",
     "files": ["audit-queue.png", "gallery.png", "sync-status.png"]
   }
 }
