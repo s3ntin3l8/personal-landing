@@ -1,6 +1,7 @@
 // Refreshes the app screenshots and loops from each app's own reproducible
-// capture pipeline (`make screenshots-landing OUT=<dir>` in every app repo, all
-// built on an isolated throwaway demo instance with synthetic data).
+// capture pipeline (`make screenshots-landing OUT=<dir>` in every app repo,
+// `make screenshots` for branchdam-mobile), all built on an isolated throwaway
+// demo instance with synthetic data.
 //
 //   npm run assets:sync                 # every app
 //   npm run assets:sync -- pocket runway
@@ -32,6 +33,13 @@ const APPS = {
   pocket: { repo: 'pocket-portfolio-tracker', env: 'POCKET_REPO' },
   runway: { repo: 'runway-ai-usage-tracker', env: 'RUNWAY_REPO' },
   branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
+  // Native Android captures; its pipeline has no separate landing profile.
+  // It boots its own branchDAM demo from BRANCHDAM_DIR (default ../branchDAM).
+  'branchdam-mobile': {
+    repo: 'branchdam-mobile',
+    env: 'BRANCHDAM_MOBILE_REPO',
+    target: 'screenshots',
+  },
 };
 const LOOP_EXT = new Set(['.webm', '.mp4', '.jpg']);
 
@@ -52,7 +60,7 @@ const manifest = await readFile(manifestPath, 'utf8').then(
 );
 
 for (const id of selected) {
-  const { repo, env } = APPS[id];
+  const { repo, env, target = 'screenshots-landing' } = APPS[id];
   const dir = process.env[env] ?? path.join(PROJECTS, repo);
   if (!existsSync(path.join(dir, 'Makefile'))) {
     console.warn(`[sync] ${id}: no checkout at ${dir}; skipping`);
@@ -60,14 +68,14 @@ for (const id of selected) {
   }
   const out = await mkdtemp(path.join(tmpdir(), `landing-${id}-`));
   console.log(`[sync] ${id}: capturing from ${dir}`);
-  const res = spawnSync('make', ['screenshots-landing', `OUT=${out}`], {
+  const res = spawnSync('make', [target, `OUT=${out}`], {
     cwd: dir,
     stdio: 'inherit',
   });
   if (res.status !== 0) {
     await rm(out, { recursive: true, force: true });
     throw new Error(
-      `${id}: make screenshots-landing failed` +
+      `${id}: make ${target} failed` +
         (res.error ? `: ${res.error.message}` : ` (exit ${res.status})`),
     );
   }
@@ -104,6 +112,12 @@ for (const id of selected) {
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`[sync] ${id}: ${files.length} files from ${commit}`);
 }
+
+// Match the repo's formatting so `npm run check` passes without a manual step.
+execFileSync(path.join(ROOT, 'node_modules/.bin/prettier'), [
+  '--write',
+  manifestPath,
+]);
 
 // Keep only the stills the page actually imports; the rest of each capture set
 // stays reproducible from the app repos and needn't live in this one.

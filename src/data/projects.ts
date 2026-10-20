@@ -27,7 +27,8 @@ import runwayDashboardMobile from '../assets/shots/runway/dashboard-mobile.png';
 import branchdamGraph from '../assets/shots/branchdam/asset-graph-desktop.png';
 import branchdamAssets from '../assets/shots/branchdam/assets-desktop.png';
 import branchdamAudit from '../assets/shots/branchdam/audit-queue-desktop.png';
-import branchdamAssetsMobile from '../assets/shots/branchdam/assets-mobile.png';
+import branchdamAuditPhone from '../assets/shots/branchdam-mobile/audit-queue.png';
+import branchdamSyncPhone from '../assets/shots/branchdam-mobile/sync-status.png';
 
 export interface Shot {
   image: ImageMetadata;
@@ -109,7 +110,7 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'Fastify', 'React', 'xterm.js', 'SQLite'],
     runsOn: 'systemd + dtach, PWA',
     auth: 'Token or OIDC',
-    version: 'v0.3.40',
+    version: 'v0.3.42',
     license: 'AGPL-3.0',
     since: '2026',
     status: 'In service',
@@ -198,7 +199,7 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'Next.js', 'Fastify', 'Postgres'],
     runsOn: 'Docker, PWA',
     auth: 'Authentik SSO',
-    version: 'v0.2.2',
+    version: 'v0.2.4',
     license: 'AGPL-3.0',
     since: '2026',
     status: 'In service',
@@ -230,7 +231,7 @@ export const projects: Project[] = [
         body: 'Equities, gold, bonds, funds and cash, across currencies.',
         shot: {
           image: pocketHoldings,
-          crop: { x: 80, y: 68, w: 20, h: 32 },
+          crop: { x: 78, y: 68, w: 22, h: 32 },
           alt: 'Pocket allocation donut by asset class',
         },
       },
@@ -367,7 +368,7 @@ export const projects: Project[] = [
     stack: ['Go', 'SQLite', 'React', 'Kotlin', 'SwiftUI'],
     runsOn: 'Docker, Android, iOS',
     auth: 'Authentik or local',
-    version: 'v0.26.2',
+    version: 'v0.27.1',
     license: 'AGPL-3.0',
     since: '2026',
     status: 'In service',
@@ -426,9 +427,14 @@ export const projects: Project[] = [
     },
     phones: [
       {
-        image: branchdamAssetsMobile,
-        alt: 'branchDAM asset list on a phone',
-        caption: 'Installable as a PWA.',
+        image: branchdamAuditPhone,
+        alt: 'branchDAM Android app reviewing a suggested edit link between a photo and its edited copy',
+        caption: 'Lineage audit, on Android.',
+      },
+      {
+        image: branchdamSyncPhone,
+        alt: 'branchDAM Android app showing a completed backup sync',
+        caption: 'Camera roll backup.',
       },
     ],
   },
