@@ -35,3 +35,7 @@ found next to this repo (override a path with `MULLION_REPO`, `POCKET_REPO`,
 - records the source commits in `src/data/assets.manifest.json`.
 
 `npm run refresh-specs` updates the release versions in the parts list from GitHub.
+
+## License
+
+Copyright (C) 2026 Björn Hansen — licensed under [AGPL-3.0-or-later](LICENSE).
