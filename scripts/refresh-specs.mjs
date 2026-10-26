@@ -8,6 +8,7 @@ const file = new URL('../src/data/projects.ts', import.meta.url);
 let src = readFileSync(file, 'utf8');
 
 const repos = {
+  sanctuary: 's3ntin3l8/sanctuary',
   mullion: 's3ntin3l8/mullion-session-manager',
   pocket: 's3ntin3l8/pocket-portfolio-tracker',
   runway: 's3ntin3l8/runway-ai-usage-tracker',

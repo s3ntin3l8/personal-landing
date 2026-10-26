@@ -76,5 +76,23 @@
     "commit": "8ff0e89",
     "capturedAt": "2026-10-20",
     "files": ["audit-queue.png", "gallery.png", "sync-status.png"]
+  },
+  "sanctuary": {
+    "commit": "b1f2a43",
+    "capturedAt": "2026-10-26",
+    "files": [
+      "case-graph-desktop.png",
+      "case-graph-mobile.png",
+      "case-truth-desktop.png",
+      "case-truth-mobile.png",
+      "case-views.jpg",
+      "case-views.mp4",
+      "case-views.webm",
+      "document-desktop.png",
+      "document-mobile.png",
+      "triage-desktop.png",
+      "triage-filter-desktop.png",
+      "triage-mobile.png"
+    ]
   }
 }
