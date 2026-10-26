@@ -20,3 +20,7 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## Review
+
+Hermes auto-reviews each PR once on open (`.github/workflows/hermes.yml`). For a follow-up look, comment `@s3ntin3l8-hermes Review` on the PR. Once approved, fix the remaining nits and merge on green CI.
