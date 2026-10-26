@@ -33,6 +33,7 @@ const APPS = {
   pocket: { repo: 'pocket-portfolio-tracker', env: 'POCKET_REPO' },
   runway: { repo: 'runway-ai-usage-tracker', env: 'RUNWAY_REPO' },
   branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
+  aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
   // Native Android captures; its pipeline has no separate landing profile.
   // It boots its own branchDAM demo from BRANCHDAM_DIR (default ../branchDAM).
   'branchdam-mobile': {

@@ -12,6 +12,7 @@ const repos = {
   pocket: 's3ntin3l8/pocket-portfolio-tracker',
   runway: 's3ntin3l8/runway-ai-usage-tracker',
   branchdam: 's3ntin3l8/branchDAM',
+  aerie: 's3ntin3l8/aerie-media-dashboard',
 };
 
 const gh = (path) => {
@@ -34,6 +35,9 @@ for (const [id, repo] of Object.entries(repos)) {
     console.warn(`${id}: no release found, keeping current value`);
     continue;
   }
+  // Some repos prefix the tag with the component name (release-please: `aerie-v1.3.0`);
+  // the page shows the bare `v1.3.0`.
+  const version = tag.replace(/^.*?(?=v\d)/, '');
   // Replace the first `version:` after this project's `id:`.
   const start = src.indexOf(`id: '${id}'`);
   const at = start < 0 ? -1 : src.indexOf('version:', start);
@@ -44,8 +48,8 @@ for (const [id, repo] of Object.entries(repos)) {
     continue;
   }
   const end = src.indexOf('\n', at);
-  src = `${src.slice(0, at)}version: '${tag}',${src.slice(end)}`;
-  console.log(`${id}: ${tag}`);
+  src = `${src.slice(0, at)}version: '${version}',${src.slice(end)}`;
+  console.log(`${id}: ${version}`);
 }
 
 writeFileSync(file, src);

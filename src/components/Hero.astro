@@ -1,5 +1,20 @@
 ---
 import { projects } from '../data/projects';
+
+// "Five parts", not "5 parts": the page counts in words.
+const count =
+  [
+    'No',
+    'One',
+    'Two',
+    'Three',
+    'Four',
+    'Five',
+    'Six',
+    'Seven',
+    'Eight',
+    'Nine',
+  ][projects.length] ?? String(projects.length);
 ---
 
 <section
@@ -8,7 +23,7 @@ import { projects } from '../data/projects';
 >
   <div class="label flex justify-between">
     <span>Catalogue · Edition {new Date().getFullYear()}</span>
-    <span>Four parts, one rack</span>
+    <span>{count} parts, one rack</span>
   </div>
 
   <div class="relative mt-10 md:mt-16">
@@ -33,7 +48,7 @@ import { projects } from '../data/projects';
   <div class="mt-12 grid gap-10 lg:grid-cols-12">
     <p class="text-xl leading-relaxed lg:col-span-5">
       I’m Björn Hansen. I manage procurement for automotive software by day, and
-      at night I build the self-hosted tools I wish existed. Four of them are
+      at night I build the self-hosted tools I wish existed. {count} of them are
       listed below, open source and running on my own hardware.
     </p>
     <p class="text-mute lg:col-span-3 lg:col-start-10">

@@ -4,6 +4,7 @@ import mullionLogo from '../assets/logos/mullion.svg';
 import pocketLogo from '../assets/logos/pocket.svg';
 import runwayLogo from '../assets/logos/runway.svg';
 import branchdamLogo from '../assets/logos/branchdam.svg';
+import aerieLogo from '../assets/logos/aerie.svg';
 
 // Every capture below comes from the app's own reproducible demo pipeline
 // (`make screenshots-landing` in each repo, synthetic data only), synced by
@@ -29,6 +30,11 @@ import branchdamAssets from '../assets/shots/branchdam/assets-desktop.png';
 import branchdamAudit from '../assets/shots/branchdam/audit-queue-desktop.png';
 import branchdamAuditPhone from '../assets/shots/branchdam-mobile/audit-queue.png';
 import branchdamSyncPhone from '../assets/shots/branchdam-mobile/sync-status.png';
+
+import aerieHome from '../assets/shots/aerie/home-desktop.png';
+import aerieStreams from '../assets/shots/aerie/streams-desktop.png';
+import aerieRequests from '../assets/shots/aerie/requests-desktop.png';
+import aerieHomeMobile from '../assets/shots/aerie/home-mobile.png';
 
 export interface Shot {
   image: ImageMetadata;
@@ -435,6 +441,82 @@ export const projects: Project[] = [
         image: branchdamSyncPhone,
         alt: 'branchDAM Android app showing a completed backup sync',
         caption: 'Camera roll backup.',
+      },
+    ],
+  },
+  {
+    id: 'aerie',
+    part: 'S3N-05',
+    name: 'Aerie',
+    fn: 'One vantage point over the whole media stack.',
+    summary:
+      'A private portal for self-hosted media services. Now playing, requests, uptime and host metrics from Plex, Overseerr, the *arr apps, Gatus and Prometheus on one page, behind your own SSO.',
+    accent: '#57f1db',
+    logo: aerieLogo,
+    github: 'https://github.com/s3ntin3l8/aerie-media-dashboard',
+    stack: ['TypeScript', 'Next.js', 'Auth.js', 'SQLite', 'Drizzle'],
+    runsOn: 'Docker, PWA',
+    auth: 'Any OIDC or local admin',
+    version: 'v1.3.0',
+    license: 'AGPL-3.0',
+    since: '2026',
+    status: 'In service',
+    hero: {
+      src: '/media/aerie-home-live',
+      width: 1600,
+      height: 1000,
+      alt: 'The Aerie home dashboard with live streams, service uptime and an approval queue',
+      caption: 'The whole stack on one page, updating live.',
+    },
+    features: [
+      {
+        size: 'lg',
+        title: 'Who is watching, live',
+        body: 'Every active stream with its progress, client, transcode state and bandwidth, polled every few seconds while something plays.',
+        shot: {
+          image: aerieStreams,
+          crop: { x: 13, y: 24.5, w: 77, h: 74 },
+          alt: 'Aerie streams page with four live streams, their progress and codec details',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'Uptime, per service',
+        body: 'Thirty days of checks and the latest response time on every tile.',
+        shot: {
+          image: aerieHome,
+          crop: { x: 5.5, y: 23.3, w: 30.2, h: 20.1 },
+          alt: 'Aerie service tile with 30-day uptime, response time and a status heartbeat',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'Plugs into what you run',
+        body: 'Plex, Jellyfin, Overseerr, the *arr suite, Tautulli, Gatus, Prometheus, Beszel and more, over their own APIs.',
+        stat: '15+ services',
+      },
+      {
+        size: 'half',
+        title: 'Requests, approved in place',
+        body: 'Pending requests from every member, with posters, and one click to approve or decline.',
+        shot: {
+          image: aerieRequests,
+          crop: { x: 5.5, y: 31.8, w: 45.9, h: 32.6 },
+          alt: 'Aerie requests page with pending and available requests and approve buttons',
+        },
+      },
+      {
+        size: 'half',
+        title: 'Real data, or nothing',
+        body: 'A panel shows live upstream data or an honest empty state until its service is configured. There is no mock fallback.',
+        stat: 'No mocks',
+      },
+    ],
+    phones: [
+      {
+        image: aerieHomeMobile,
+        alt: 'Aerie home on a phone with service uptime tiles',
+        caption: 'Home, on the phone.',
       },
     ],
   },
