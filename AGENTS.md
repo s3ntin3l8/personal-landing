@@ -23,4 +23,4 @@ Consult these guides before working on related tasks:
 
 ## Review
 
-Hermes auto-reviews each PR once on open (`.github/workflows/hermes.yml`). For a follow-up look, comment `@s3ntin3l8-hermes Review` on the PR. Once approved, fix the remaining nits and merge on green CI.
+Hermes auto-reviews each PR once on open or when a draft is marked ready (`.github/workflows/hermes.yml`). For a follow-up look, comment `@s3ntin3l8-hermes Review` on the PR. Once approved, fix the remaining nits and merge on green CI.
