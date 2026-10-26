@@ -1,6 +1,6 @@
 # personal-landing
 
-Personal landing page for [s3ntin3l8.de](https://s3ntin3l8.de): Mullion, Pocket, Runway and branchDAM.
+Personal landing page for [s3ntin3l8.de](https://s3ntin3l8.de): Mullion, Pocket, Runway, branchDAM and Aerie.
 
 Astro (static) + Tailwind v4, self-hosted fonts, no third-party requests, no cookies.
 
@@ -27,7 +27,7 @@ pipeline (`make screenshots-landing OUT=<dir>`). It boots an isolated
 throwaway instance with synthetic data, captures 2x stills and a short loop, and
 tears the instance down. `npm run assets:sync` runs that pipeline for every app
 found next to this repo (override a path with `MULLION_REPO`, `POCKET_REPO`,
-`RUNWAY_REPO`, `BRANCHDAM_REPO` or `SANCTUARY_REPO`, or pass app ids to sync a subset), then:
+`RUNWAY_REPO`, `BRANCHDAM_REPO`, `AERIE_REPO` or `SANCTUARY_REPO`, or pass app ids to sync a subset), then:
 
 - copies the stills into `src/assets/shots/<app>/`, keeping only the ones the
   page imports;

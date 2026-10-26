@@ -77,6 +77,20 @@
     "capturedAt": "2026-10-20",
     "files": ["audit-queue.png", "gallery.png", "sync-status.png"]
   },
+  "aerie": {
+    "commit": "25b97c2",
+    "capturedAt": "2026-10-26",
+    "files": [
+      "home-desktop.png",
+      "home-live.jpg",
+      "home-live.mp4",
+      "home-live.webm",
+      "home-mobile.png",
+      "requests-desktop.png",
+      "status-desktop.png",
+      "streams-desktop.png"
+    ]
+  },
   "sanctuary": {
     "commit": "b1f2a43",
     "capturedAt": "2026-10-26",

@@ -3,6 +3,9 @@ import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.jpg';
 import { projects } from '../data/projects';
 
+// Two plates after the last project (Infrastructure comes first).
+const plate = projects.length + 2;
+
 const ledger = [
   {
     when: '2024 – now',
@@ -31,7 +34,7 @@ const ledger = [
   },
 ];
 
-// The catalogue's last part number (S3N-05 -> 05), so a new part cannot leave this line behind.
+// The catalogue's last part number (S3N-06 -> 06), so a new part cannot leave this line behind.
 const lastPart = projects.at(-1)?.part.slice(-2) ?? '01';
 
 const sheet: [string, string][] = [
@@ -50,7 +53,7 @@ const sheet: [string, string][] = [
 >
   <div class="rule-draw h-px bg-line-strong"></div>
   <div class="label mt-3 flex justify-between">
-    <span>Plate 06</span>
+    <span>Plate {String(plate).padStart(2, '0')}</span>
     <span>Operator</span>
   </div>
 
@@ -69,7 +72,7 @@ const sheet: [string, string][] = [
         </div>
       </div>
       <figcaption class="mt-3 flex gap-4 text-sm text-mute">
-        <span class="label shrink-0 text-ink">Fig. 6.1</span>
+        <span class="label shrink-0 text-ink">Fig. {plate}.1</span>
         <span>The operator, at the desk.</span>
       </figcaption>
     </figure>
