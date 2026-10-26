@@ -1,0 +1,9 @@
+{
+  "controls": [
+    {
+      "id": "dev",
+      "title": "dev",
+      "command": "npm run dev -- --host"
+    }
+  ]
+}
