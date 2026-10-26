@@ -68,3 +68,9 @@ test('an empty or loop-only delivery is caught, and a missing size is not mistak
   assert.equal(unsized.length, 1);
   assert.match(unsized[0], /without a size/);
 });
+
+test('legacy-named stills are reported as misnamed, not as an empty delivery', () => {
+  const problems = checkDelivery([still('desktop-dashboard.png', 3200, 2000)]);
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /a still is named/);
+});

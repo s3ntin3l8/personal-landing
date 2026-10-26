@@ -10,14 +10,20 @@ const font = (path) =>
 
 // The parts come from the catalogue itself (src/data/projects.ts), so a new
 // part cannot be left off the card.
+const catalogue = readFileSync(
+  new URL('../src/data/projects.ts', import.meta.url),
+  'utf8',
+);
 const parts = [
-  ...readFileSync(
-    new URL('../src/data/projects.ts', import.meta.url),
-    'utf8',
-  ).matchAll(/part: '(S3N-\d+)',\s*name: '([^']+)'/g),
+  ...catalogue.matchAll(/part: '(S3N-\d+)',\s*name: '([^']+)'/g),
 ].map(([, no, name]) => [no, name]);
-if (parts.length === 0)
-  throw new Error('no parts found in src/data/projects.ts');
+// An entry whose `part:` and `name:` are no longer adjacent would silently
+// drop off the card; compare with the number of entries instead.
+const entries = [...catalogue.matchAll(/^ {4}id: '/gm)].length;
+if (parts.length === 0 || parts.length !== entries)
+  throw new Error(
+    `found ${parts.length} parts for ${entries} projects in src/data/projects.ts; keep \`part:\` and \`name:\` adjacent`,
+  );
 
 const html = `<!doctype html><html><head><style>
 @font-face { font-family: Archivo; src: url(${font('@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2')}) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }

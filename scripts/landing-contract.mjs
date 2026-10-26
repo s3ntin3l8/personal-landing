@@ -35,6 +35,7 @@ export function checkDelivery(files) {
   const exact = new Set();
   const sized = new Set();
   const seen = new Set();
+  let pngs = 0;
   const loops = new Map();
 
   for (const { name, size } of files) {
@@ -43,6 +44,7 @@ export function checkDelivery(files) {
     const ext = name.slice(dot);
     const stem = name.slice(0, dot);
     if (ext === '.png') {
+      pngs += 1;
       const m = STILL_NAME.exec(name);
       if (!m) {
         problems.push(`${name}: a still is named <scene>-<desktop|mobile>.png`);
@@ -68,7 +70,8 @@ export function checkDelivery(files) {
     }
   }
 
-  if (seen.size === 0)
+  // Wrongly named stills are already reported one by one; "nothing delivered" is for a delivery without any.
+  if (pngs === 0)
     problems.push(
       'no stills delivered: the capture produced nothing to ship, and the old ones would be kept under the new commit',
     );
