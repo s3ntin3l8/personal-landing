@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.jpg';
+import { projects } from '../data/projects';
 
 const ledger = [
   {
@@ -30,11 +31,14 @@ const ledger = [
   },
 ];
 
+// The catalogue's last part number (S3N-05 -> 05), so a new part cannot leave this line behind.
+const lastPart = projects.at(-1)?.part.slice(-2) ?? '01';
+
 const sheet: [string, string][] = [
   ['Name', 'Björn Hansen'],
   ['Based', 'Near Ingolstadt, DE'],
   ['Day job', 'Procurement project management, CARIAD'],
-  ['Night job', 'Self-hosted software, S3N-01 to 04'],
+  ['Night job', `Self-hosted software, S3N-01 to ${lastPart}`],
   ['Education', 'Hult International Business School'],
 ];
 ---

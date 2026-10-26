@@ -57,3 +57,14 @@ test('a half-written loop and a stray file are caught', () => {
   assert.match(problems.join('\n'), /loop "views" is missing \.jpg/);
   assert.match(problems.join('\n'), /notes\.txt: only \.png/);
 });
+
+test('an empty or loop-only delivery is caught, and a missing size is not mistaken for a wrong scale', () => {
+  assert.match(checkDelivery([]).join('\n'), /no stills delivered/);
+  assert.match(
+    checkDelivery(triplet('views')).join('\n'),
+    /no stills delivered/,
+  );
+  const unsized = checkDelivery([{ name: 'a-desktop.png' }]);
+  assert.equal(unsized.length, 1);
+  assert.match(unsized[0], /without a size/);
+});

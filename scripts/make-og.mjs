@@ -8,12 +8,16 @@ import { chromium } from 'playwright-core';
 const font = (path) =>
   `data:font/woff2;base64,${readFileSync(new URL(`../node_modules/${path}`, import.meta.url)).toString('base64')}`;
 
+// The parts come from the catalogue itself (src/data/projects.ts), so a new
+// part cannot be left off the card.
 const parts = [
-  ['S3N-01', 'Mullion'],
-  ['S3N-02', 'Pocket'],
-  ['S3N-03', 'Runway'],
-  ['S3N-04', 'branchDAM'],
-];
+  ...readFileSync(
+    new URL('../src/data/projects.ts', import.meta.url),
+    'utf8',
+  ).matchAll(/part: '(S3N-\d+)',\s*name: '([^']+)'/g),
+].map(([, no, name]) => [no, name]);
+if (parts.length === 0)
+  throw new Error('no parts found in src/data/projects.ts');
 
 const html = `<!doctype html><html><head><style>
 @font-face { font-family: Archivo; src: url(${font('@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2')}) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; }
@@ -25,7 +29,7 @@ body { width: 1200px; height: 630px; background: #0e0d0b; color: #ece6d9; font-f
 .rule { height: 1px; background: rgb(236 230 217 / .32); margin: 14px 0 0; }
 h1 { margin-top: 48px; font-size: 150px; line-height: .86; font-stretch: 62%; font-weight: 760; text-transform: uppercase; }
 h1 i { font-style: normal; color: #ff4f00; }
-.bom { position: absolute; left: 64px; right: 64px; bottom: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.bom { position: absolute; left: 64px; right: 64px; bottom: 48px; display: grid; grid-template-columns: repeat(${parts.length}, 1fr); gap: 24px; }
 .bom div { border-top: 1px solid rgb(236 230 217 / .32); padding-top: 12px; }
 .bom b { display: block; margin-top: 6px; font-size: 30px; font-weight: 600; }
 svg { position: absolute; right: 64px; top: 112px; }

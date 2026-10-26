@@ -95,19 +95,29 @@ for (const id of selected) {
 
   const files = (await readdir(out)).filter((f) => !f.startsWith('.'));
   if (contract) {
-    const delivered = await Promise.all(
-      files.map(async (name) =>
-        name.endsWith('.png')
-          ? { name, size: pngSize(await readFile(path.join(out, name))) }
-          : { name },
-      ),
-    );
-    const problems = checkDelivery(delivered);
-    if (problems.length) {
-      await rm(out, { recursive: true, force: true });
-      throw new Error(
-        `${id}: the capture breaks the landing contract:\n  - ${problems.join('\n  - ')}`,
+    // Any failure here (an unreadable PNG as much as a breach) must leave no temp dir behind.
+    try {
+      const delivered = await Promise.all(
+        files.map(async (name) => {
+          if (!name.endsWith('.png')) return { name };
+          try {
+            return {
+              name,
+              size: pngSize(await readFile(path.join(out, name))),
+            };
+          } catch (err) {
+            throw new Error(`${name}: ${err.message}`);
+          }
+        }),
       );
+      const problems = checkDelivery(delivered);
+      if (problems.length)
+        throw new Error(
+          `the capture breaks the landing contract:\n  - ${problems.join('\n  - ')}`,
+        );
+    } catch (err) {
+      await rm(out, { recursive: true, force: true });
+      throw new Error(`${id}: ${err.message}`);
     }
   }
   const shotsDir = path.join(ROOT, 'src/assets/shots', id);

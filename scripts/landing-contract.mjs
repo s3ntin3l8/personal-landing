@@ -3,9 +3,10 @@
 // checks it for every app that has moved onto visual-kit, so a wrong size or a
 // half-written loop fails loudly here instead of shipping.
 //
-//   stills  <scene>-desktop.png / <scene>-mobile.png, dark, a viewport-sized
-//           scene is exactly 1600x1000 @2x / 390x844 @3x; an element shot is
-//           smaller. Chromium may round the phone height by a pixel.
+//   stills  <scene>-desktop.png / <scene>-mobile.png, a viewport-sized scene is
+//           exactly 1600x1000 @2x / 390x844 @3x; an element shot is smaller.
+//           Chromium may round the phone height by a pixel. (Dark only is the
+//           capture's job; nothing here looks at pixels.)
 //   loops   <name>.webm + <name>.mp4 + <name>.jpg, all three or none
 export const STILL = {
   desktop: { width: 3200, height: 2000 },
@@ -32,6 +33,7 @@ const near = (a, b) => Math.abs(a - b) <= TOLERANCE;
 export function checkDelivery(files) {
   const problems = [];
   const exact = new Set();
+  const sized = new Set();
   const seen = new Set();
   const loops = new Map();
 
@@ -49,6 +51,7 @@ export function checkDelivery(files) {
       const spec = STILL[m[1]];
       seen.add(m[1]);
       if (!size) continue;
+      sized.add(m[1]);
       if (
         size.width > spec.width + TOLERANCE ||
         size.height > spec.height + TOLERANCE
@@ -65,10 +68,16 @@ export function checkDelivery(files) {
     }
   }
 
+  if (seen.size === 0)
+    problems.push(
+      'no stills delivered: the capture produced nothing to ship, and the old ones would be kept under the new commit',
+    );
   for (const vp of seen)
     if (!exact.has(vp))
       problems.push(
-        `no ${vp} still has the full ${STILL[vp].width}x${STILL[vp].height} size (wrong device scale?)`,
+        sized.has(vp)
+          ? `no ${vp} still has the full ${STILL[vp].width}x${STILL[vp].height} size (wrong device scale?)`
+          : `${vp} stills were handed in without a size, so they cannot be checked`,
       );
   for (const [stem, exts] of loops) {
     const missing = LOOP_EXT.filter((e) => !exts.has(e));
