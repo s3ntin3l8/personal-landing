@@ -1,0 +1,17 @@
+name: canary-dp
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  dp:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: s3ntin3l8/.github/.github/workflows/docker-publish.yml@feat/docker-publish-commit-date
+    with:
+      image-name: s3ntin3l8/canary-dp
+      release-tag: 92b7f5d171f9b59654ca8e6d60693e67847ddd68
+      platforms: linux/amd64
+    secrets: inherit
