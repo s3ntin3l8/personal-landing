@@ -6,6 +6,9 @@
 //   npm run assets:sync                 # every app
 //   npm run assets:sync -- pocket runway
 //
+// An app marked `contract: true` below is also checked against the landing
+// contract (scripts/landing-contract.mjs): names, sizes, complete loops.
+//
 // Repos are found next to this one (../<repo>) unless overridden, e.g.
 // POCKET_REPO=/path/to/checkout. Stills land in src/assets/shots/<app>/ (Astro
 // optimises them), loops in public/media/. src/data/assets.manifest.json records
@@ -24,11 +27,21 @@ import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkDelivery, pngSize } from './landing-contract.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROJECTS = path.resolve(ROOT, '..');
 
+// `contract: true` = the app delivers the visual-kit landing contract (see
+// landing-contract.mjs) and the sync fails on a delivery that breaks it. The
+// others still deliver their own names and sizes until they move onto
+// visual-kit (one migration issue per repo); flip the flag as each does.
 const APPS = {
+  sanctuary: {
+    repo: 'sanctuary',
+    env: 'SANCTUARY_REPO',
+    contract: true,
+  },
   mullion: { repo: 'mullion-session-manager', env: 'MULLION_REPO' },
   pocket: { repo: 'pocket-portfolio-tracker', env: 'POCKET_REPO' },
   runway: { repo: 'runway-ai-usage-tracker', env: 'RUNWAY_REPO' },
@@ -61,7 +74,7 @@ const manifest = await readFile(manifestPath, 'utf8').then(
 );
 
 for (const id of selected) {
-  const { repo, env, target = 'screenshots-landing' } = APPS[id];
+  const { repo, env, target = 'screenshots-landing', contract } = APPS[id];
   const dir = process.env[env] ?? path.join(PROJECTS, repo);
   if (!existsSync(path.join(dir, 'Makefile'))) {
     console.warn(`[sync] ${id}: no checkout at ${dir}; skipping`);
@@ -81,7 +94,33 @@ for (const id of selected) {
     );
   }
 
-  const files = await readdir(out);
+  const files = (await readdir(out)).filter((f) => !f.startsWith('.'));
+  if (contract) {
+    // Any failure here (an unreadable PNG as much as a breach) must leave no temp dir behind.
+    try {
+      const delivered = await Promise.all(
+        files.map(async (name) => {
+          if (!name.endsWith('.png')) return { name };
+          try {
+            return {
+              name,
+              size: pngSize(await readFile(path.join(out, name))),
+            };
+          } catch (err) {
+            throw new Error(`${name}: ${err.message}`);
+          }
+        }),
+      );
+      const problems = checkDelivery(delivered);
+      if (problems.length)
+        throw new Error(
+          `the capture breaks the landing contract:\n  - ${problems.join('\n  - ')}`,
+        );
+    } catch (err) {
+      await rm(out, { recursive: true, force: true });
+      throw new Error(`${id}: ${err.message}`);
+    }
+  }
   const shotsDir = path.join(ROOT, 'src/assets/shots', id);
   const mediaDir = path.join(ROOT, 'public/media');
   await mkdir(shotsDir, { recursive: true });

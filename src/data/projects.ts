@@ -5,6 +5,7 @@ import pocketLogo from '../assets/logos/pocket.svg';
 import runwayLogo from '../assets/logos/runway.svg';
 import branchdamLogo from '../assets/logos/branchdam.svg';
 import aerieLogo from '../assets/logos/aerie.svg';
+import sanctuaryLogo from '../assets/logos/sanctuary.svg';
 
 // Every capture below comes from the app's own reproducible demo pipeline
 // (`make screenshots-landing` in each repo, synthetic data only), synced by
@@ -35,6 +36,13 @@ import aerieHome from '../assets/shots/aerie/home-desktop.png';
 import aerieStreams from '../assets/shots/aerie/streams-desktop.png';
 import aerieRequests from '../assets/shots/aerie/requests-desktop.png';
 import aerieHomeMobile from '../assets/shots/aerie/home-mobile.png';
+
+import sanctuaryGraph from '../assets/shots/sanctuary/case-graph-desktop.png';
+import sanctuaryTruth from '../assets/shots/sanctuary/case-truth-desktop.png';
+import sanctuaryFilter from '../assets/shots/sanctuary/triage-filter-desktop.png';
+import sanctuaryDocument from '../assets/shots/sanctuary/document-desktop.png';
+import sanctuaryTriageMobile from '../assets/shots/sanctuary/triage-mobile.png';
+import sanctuaryDocumentMobile from '../assets/shots/sanctuary/document-mobile.png';
 
 export interface Shot {
   image: ImageMetadata;
@@ -517,6 +525,95 @@ export const projects: Project[] = [
         image: aerieHomeMobile,
         alt: 'Aerie home on a phone with service uptime tiles',
         caption: 'Home, on the phone.',
+      },
+    ],
+  },
+  {
+    id: 'sanctuary',
+    part: 'S3N-06',
+    name: 'Sanctuary',
+    fn: 'A case intelligence engine for litigation, on your own machine.',
+    summary:
+      'Court letters, emails and scans become a graph of who said what to whom, a map of what is contested and a clock of what is due. The AI runs locally; no document leaves the machine.',
+    accent: '#14b8a6',
+    logo: sanctuaryLogo,
+    github: 'https://github.com/s3ntin3l8/sanctuary',
+    stack: ['Python', 'FastAPI', 'React', 'Postgres + pgvector', 'Ollama'],
+    runsOn: 'Docker Compose',
+    auth: 'Local accounts or OIDC',
+    version: 'v0.6.1',
+    license: 'AGPL-3.0',
+    since: '2026',
+    status: 'Pre-release',
+    hero: {
+      src: '/media/sanctuary-case-views',
+      width: 1600,
+      height: 1000,
+      alt: 'A Sanctuary case switching between its graph, truth map, calendar and costs',
+      caption: 'One case, four views.',
+    },
+    features: [
+      {
+        size: 'lg',
+        title: 'A case as a graph',
+        body: 'Every letter and email on a swim lane by who sent it: you, the court, the other side, third parties. Hundreds of letters collapse to the few that matter.',
+        shot: {
+          image: sanctuaryGraph,
+          crop: { x: 3.5, y: 12.5, w: 79.5, h: 76.5 },
+          alt: 'Sanctuary correspondence graph with swim lanes for you, the court, the opposing side and third parties',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'A clock, not a pile',
+        body: 'Deadlines pulled from the letters, with the cost exposure beside them.',
+        shot: {
+          image: sanctuaryGraph,
+          crop: { x: 83.3, y: 20.5, w: 16.7, h: 29 },
+          alt: 'Sanctuary deadlines with days late and the court that set them',
+        },
+      },
+      {
+        size: 'sm',
+        title: 'Triage by email',
+        body: 'Each email is one bundle, filtered by case and proceeding.',
+        shot: {
+          image: sanctuaryFilter,
+          crop: { x: 0, y: 0, w: 100, h: 100 },
+          alt: 'Sanctuary triage filter listing proceedings by file number and court',
+        },
+      },
+      {
+        size: 'half',
+        title: 'What is contested',
+        body: 'Every claim with its evidence chain, marked asserted, established, contested or refuted. No invented probabilities.',
+        shot: {
+          image: sanctuaryTruth,
+          crop: { x: 4.5, y: 14.5, w: 78, h: 49 },
+          alt: 'Sanctuary truth map with contested claims and their evidence',
+        },
+      },
+      {
+        size: 'half',
+        title: 'The sentence that matters',
+        body: 'A three-bullet summary per document, and each key passage anchored in the text.',
+        shot: {
+          image: sanctuaryDocument,
+          crop: { x: 79, y: 62, w: 21, h: 32 },
+          alt: 'Sanctuary AI summary with legal significance, action and finance, and the key passages',
+        },
+      },
+    ],
+    phones: [
+      {
+        image: sanctuaryTriageMobile,
+        alt: 'Sanctuary triage on a phone',
+        caption: 'Triage.',
+      },
+      {
+        image: sanctuaryDocumentMobile,
+        alt: 'Sanctuary document with highlighted passages on a phone',
+        caption: 'A document.',
       },
     ],
   },

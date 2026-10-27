@@ -27,12 +27,17 @@ pipeline (`make screenshots-landing OUT=<dir>`). It boots an isolated
 throwaway instance with synthetic data, captures 2x stills and a short loop, and
 tears the instance down. `npm run assets:sync` runs that pipeline for every app
 found next to this repo (override a path with `MULLION_REPO`, `POCKET_REPO`,
-`RUNWAY_REPO`, `BRANCHDAM_REPO` or `AERIE_REPO`, or pass app ids to sync a subset), then:
+`RUNWAY_REPO`, `BRANCHDAM_REPO`, `AERIE_REPO` or `SANCTUARY_REPO`, or pass app ids to sync a subset), then:
 
 - copies the stills into `src/assets/shots/<app>/`, keeping only the ones the
   page imports;
 - copies the loops into `public/media/`;
 - records the source commits in `src/data/assets.manifest.json`.
+
+An app that has moved onto [visual-kit](https://github.com/s3ntin3l8/visual-kit) (`contract: true` in
+`scripts/sync-assets.mjs`) is also checked against the landing contract
+(`scripts/landing-contract.mjs`): still names and sizes, complete loops. A delivery that breaks it fails the sync.
+`npm test` covers the check.
 
 `npm run refresh-specs` updates the release versions in the parts list from GitHub.
 

@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "refresh-specs": "node scripts/refresh-specs.mjs",
     "og": "node scripts/make-og.mjs",
-    "assets:sync": "node scripts/sync-assets.mjs"
+    "assets:sync": "node scripts/sync-assets.mjs",
+    "test": "node --test \"scripts/*.test.mjs\""
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",

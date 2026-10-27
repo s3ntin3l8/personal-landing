@@ -90,5 +90,23 @@
       "status-desktop.png",
       "streams-desktop.png"
     ]
+  },
+  "sanctuary": {
+    "commit": "4df129c",
+    "capturedAt": "2026-10-27",
+    "files": [
+      "case-graph-desktop.png",
+      "case-graph-mobile.png",
+      "case-truth-desktop.png",
+      "case-truth-mobile.png",
+      "case-views.jpg",
+      "case-views.mp4",
+      "case-views.webm",
+      "document-desktop.png",
+      "document-mobile.png",
+      "triage-desktop.png",
+      "triage-filter-desktop.png",
+      "triage-mobile.png"
+    ]
   }
 }
