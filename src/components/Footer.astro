@@ -1,5 +1,5 @@
 ---
-// Colophon. GIT_SHA is passed into the Docker build by CI; locally it is "dev".
+// Colophon. GIT_SHA is set from the Docker build's COMMIT_SHA (see Dockerfile); locally it is "dev".
 const built = new Date().toISOString().slice(0, 10);
 const sha = (process.env.GIT_SHA ?? '').slice(0, 7) || 'dev';
 const year = new Date().getFullYear();
