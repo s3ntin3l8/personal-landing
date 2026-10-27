@@ -12,9 +12,15 @@ on:
       dry-run:
         description: 'Simulate: log what would be deleted without deleting'
         type: boolean
-        default: false
+        default: true
 
 permissions: {}
+
+# A manual run must not overlap the Sunday one: two delete+validate passes on the same
+# package can race on the same manifest lists. Queue, never cancel a prune in flight.
+concurrency:
+  group: ghcr-cleanup
+  cancel-in-progress: false
 
 jobs:
   cleanup:
