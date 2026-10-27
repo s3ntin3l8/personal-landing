@@ -5,7 +5,8 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 # Short commit for the colophon. COMMIT_SHA is added by the shared docker-publish
-# workflow (the commit it built); local builds show "dev".
+# workflow (the commit it built); local builds show "dev" unless you pass
+# `--build-arg COMMIT_SHA=$(git rev-parse HEAD)`.
 ARG COMMIT_SHA=""
 RUN GIT_SHA="$COMMIT_SHA" npm run build
 
