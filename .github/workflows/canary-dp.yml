@@ -1,0 +1,17 @@
+name: canary-dp
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  dp:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: s3ntin3l8/.github/.github/workflows/docker-publish.yml@fix/docker-publish-revision-label
+    with:
+      image-name: s3ntin3l8/canary-dp
+      release-tag: a984875686ac0caa2d311cfcf92496a1d8007c88
+      platforms: linux/amd64
+    secrets: inherit
