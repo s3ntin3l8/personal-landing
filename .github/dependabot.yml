@@ -17,6 +17,10 @@ updates:
       interval: 'weekly'
     cooldown:
       default-days: 7
+    ignore:
+      # @astrojs/check (and @volar/kit) support TypeScript 5 and 6 only.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
     groups:
       npm-deps:
         patterns:
