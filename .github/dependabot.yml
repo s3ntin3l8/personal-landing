@@ -18,7 +18,8 @@ updates:
     cooldown:
       default-days: 7
     ignore:
-      # @astrojs/check (and @volar/kit) support TypeScript 5 and 6 only.
+      # @astrojs/check's peer range is ^5 || ^6 and TS 7 ships no lib/typescript.js.
+      # Remove once @astrojs/check accepts TS 7 (#22).
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']
     groups:
