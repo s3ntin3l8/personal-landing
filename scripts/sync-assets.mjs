@@ -43,7 +43,11 @@ const APPS = {
     contract: true,
   },
   mullion: { repo: 'mullion-session-manager', env: 'MULLION_REPO' },
-  pocket: { repo: 'pocket-portfolio-tracker', env: 'POCKET_REPO' },
+  pocket: {
+    repo: 'pocket-portfolio-tracker',
+    env: 'POCKET_REPO',
+    contract: true,
+  },
   runway: { repo: 'runway-ai-usage-tracker', env: 'RUNWAY_REPO' },
   branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
   aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
