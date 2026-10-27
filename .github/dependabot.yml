@@ -17,6 +17,11 @@ updates:
       interval: 'weekly'
     cooldown:
       default-days: 7
+    ignore:
+      # @astrojs/check's peer range is ^5 || ^6 and TS 7 ships no lib/typescript.js.
+      # Remove once @astrojs/check accepts TS 7 (#22).
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
     groups:
       npm-deps:
         patterns:
