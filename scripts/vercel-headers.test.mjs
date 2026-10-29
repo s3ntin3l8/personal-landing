@@ -35,10 +35,9 @@ test('vercel.json caches /_astro/ and /media/ like nginx.conf', () => {
   ]) {
     const block = conf.match(new RegExp(`location ${path} \\{([^}]*)\\}`))?.[1];
     assert.ok(block, `nginx.conf has no location ${path}`);
-    assert.equal(
-      vercelHeaders(source)['Cache-Control'],
-      nginxHeaders(block)['Cache-Control'],
-    );
+    const want = nginxHeaders(block)['Cache-Control'];
+    assert.ok(want, `nginx.conf lost Cache-Control on ${path}`);
+    assert.equal(vercelHeaders(source)['Cache-Control'], want);
   }
 });
 

@@ -23,6 +23,14 @@ someone with a share link can open it). `main` is never deployed there (`git.dep
 production stays on the container above. The security and cache headers exist twice, in `security-headers.conf` /
 `nginx.conf` and in `vercel.json`; `npm test` fails if they drift apart.
 
+Three settings live only in the Vercel project, not in the repo, so check them if previews misbehave:
+
+- Deployment Protection is Vercel Authentication, Standard Protection. This is the only thing keeping previews private.
+- The Vercel Toolbar is off for previews. Its `vercel.live` script is blocked by the CSP (`script-src 'self'`).
+- Node is 22 or newer (`engines` in `package.json` sets the floor); an older runtime fails the build.
+
+Every non-`main` branch gets a preview, Dependabot's included. That is harmless behind the login wall but uses Hobby build quota.
+
 ## Content
 
 Project copy, links, crops and feature tiles live in `src/data/projects.ts`.
