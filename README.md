@@ -18,6 +18,11 @@ CI builds and signs a container image (`ghcr.io/s3ntin3l8/personal-landing`, ngi
 `docker-publish` workflow. It is deployed behind Traefik by the Ansible playbook
 `ansible/playbooks/docker/personal-landing` in the homelab repo; Watchtower picks up new `edge` images (CI publishes `edge` on every push to main).
 
+Pull requests also get a private Vercel preview (Hobby plan, Vercel Authentication on, so only the account owner or
+someone with a share link can open it). `main` is never deployed there (`git.deploymentEnabled` in `vercel.json`);
+production stays on the container above. The security and cache headers exist twice, in `security-headers.conf` /
+`nginx.conf` and in `vercel.json`; `npm test` fails if they drift apart.
+
 ## Content
 
 Project copy, links, crops and feature tiles live in `src/data/projects.ts`.
