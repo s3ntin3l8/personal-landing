@@ -18,6 +18,20 @@ CI builds and signs a container image (`ghcr.io/s3ntin3l8/personal-landing`, ngi
 `docker-publish` workflow. It is deployed behind Traefik by the Ansible playbook
 `ansible/playbooks/docker/personal-landing` in the homelab repo; Watchtower picks up new `edge` images (CI publishes `edge` on every push to main).
 
+Pull requests also get a private Vercel preview (Hobby plan, Vercel Authentication on, so only the account owner or
+someone with a share link can open it). `main` is never deployed there (`git.deploymentEnabled` in `vercel.json`);
+production stays on the container above. The security and cache headers exist twice, in `security-headers.conf` /
+`nginx.conf` and in `vercel.json`; `npm test` fails if they drift apart.
+
+Three settings live only in the Vercel project, not in the repo, so check them if previews misbehave:
+
+- Deployment Protection is Vercel Authentication, Standard Protection. This is the only thing keeping previews private.
+- The Vercel Toolbar (and Preview Comments) should be off for previews. Its `vercel.live` script is blocked by the CSP
+  (`script-src 'self'`), so while it is on, previews inject a script that only produces a console error.
+- Node is 22 or newer (`engines` in `package.json` sets the floor); an older runtime fails the build.
+
+Every non-`main` branch gets a preview, Dependabot's included. That is harmless behind the login wall but uses Hobby build quota.
+
 ## Content
 
 Project copy, links, crops and feature tiles live in `src/data/projects.ts`.

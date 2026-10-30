@@ -1,7 +1,12 @@
 ---
-// Colophon. GIT_SHA is set from the Docker build's COMMIT_SHA (see Dockerfile); locally it is "dev".
+// Colophon. GIT_SHA is set from the Docker build's COMMIT_SHA (see Dockerfile), Vercel previews
+// provide VERCEL_GIT_COMMIT_SHA; locally it is "dev".
 const built = new Date().toISOString().slice(0, 10);
-const sha = (process.env.GIT_SHA ?? '').slice(0, 7) || 'dev';
+const sha =
+  (process.env.GIT_SHA || process.env.VERCEL_GIT_COMMIT_SHA || '').slice(
+    0,
+    7,
+  ) || 'dev';
 const year = new Date().getFullYear();
 ---
 
