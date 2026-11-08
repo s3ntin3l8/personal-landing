@@ -27,42 +27,12 @@ import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { APPS } from './landing-apps.mjs';
 import { checkDelivery, pngSize } from './landing-contract.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROJECTS = path.resolve(ROOT, '..');
 
-// `contract: true` = the app delivers the visual-kit landing contract (see
-// landing-contract.mjs) and the sync fails on a delivery that breaks it. The
-// others still deliver their own names and sizes until they move onto
-// visual-kit (one migration issue per repo); flip the flag as each does.
-const APPS = {
-  sanctuary: {
-    repo: 'sanctuary',
-    env: 'SANCTUARY_REPO',
-    contract: true,
-  },
-  mullion: { repo: 'mullion-session-manager', env: 'MULLION_REPO' },
-  pocket: {
-    repo: 'pocket-portfolio-tracker',
-    env: 'POCKET_REPO',
-    contract: true,
-  },
-  runway: {
-    repo: 'runway-ai-usage-tracker',
-    env: 'RUNWAY_REPO',
-    contract: true,
-  },
-  branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
-  aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
-  // Native Android captures; its pipeline has no separate landing profile.
-  // It boots its own branchDAM demo from BRANCHDAM_DIR (default ../branchDAM).
-  'branchdam-mobile': {
-    repo: 'branchdam-mobile',
-    env: 'BRANCHDAM_MOBILE_REPO',
-    target: 'screenshots',
-  },
-};
 const LOOP_EXT = new Set(['.webm', '.mp4', '.jpg']);
 
 const wanted = process.argv.slice(2);
