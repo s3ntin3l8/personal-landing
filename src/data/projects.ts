@@ -10,11 +10,11 @@ import sanctuaryLogo from '../assets/logos/sanctuary.svg';
 // Every capture below comes from the app's own reproducible demo pipeline
 // (`make screenshots-landing` in each repo, synthetic data only), synced by
 // `npm run assets:sync`; src/data/assets.manifest.json records the commits.
-import mullionDashboard from '../assets/shots/mullion/desktop-dashboard.png';
-import mullionGit from '../assets/shots/mullion/desktop-git-panel.png';
-import mullionKanban from '../assets/shots/mullion/desktop-kanban.png';
-import mullionMobileTerminal from '../assets/shots/mullion/mobile-terminal.png';
-import mullionMobileList from '../assets/shots/mullion/mobile-session-list.png';
+import mullionDashboard from '../assets/shots/mullion/dashboard-desktop.png';
+import mullionGit from '../assets/shots/mullion/git-panel-desktop.png';
+import mullionKanban from '../assets/shots/mullion/kanban-desktop.png';
+import mullionMobileTerminal from '../assets/shots/mullion/terminal-mobile.png';
+import mullionMobileList from '../assets/shots/mullion/session-list-mobile.png';
 
 import pocketHoldings from '../assets/shots/pocket/holdings-desktop.png';
 import pocketInsights from '../assets/shots/pocket/insights-desktop.png';
