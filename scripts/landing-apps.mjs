@@ -12,7 +12,11 @@ export const APPS = {
     env: 'SANCTUARY_REPO',
     contract: true,
   },
-  mullion: { repo: 'mullion-session-manager', env: 'MULLION_REPO' },
+  mullion: {
+    repo: 'mullion-session-manager',
+    env: 'MULLION_REPO',
+    contract: true,
+  },
   pocket: {
     repo: 'pocket-portfolio-tracker',
     env: 'POCKET_REPO',

@@ -19,14 +19,17 @@
     ]
   },
   "mullion": {
-    "commit": "98c3f051",
-    "capturedAt": "2026-10-20",
+    "commit": "dbf9fad1",
+    "capturedAt": "2026-11-08",
     "files": [
-      "desktop-dashboard.png",
-      "desktop-git-panel.png",
-      "desktop-kanban.png",
-      "mobile-session-list.png",
-      "mobile-terminal.png",
+      "attention-desktop.png",
+      "dashboard-desktop.png",
+      "git-panel-desktop.png",
+      "github-pr-desktop.png",
+      "kanban-desktop.png",
+      "session-list-mobile.png",
+      "tasks-tab-desktop.png",
+      "terminal-mobile.png",
       "terminal-stream.jpg",
       "terminal-stream.mp4",
       "terminal-stream.webm"
