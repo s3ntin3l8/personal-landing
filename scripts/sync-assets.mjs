@@ -48,7 +48,11 @@ const APPS = {
     env: 'POCKET_REPO',
     contract: true,
   },
-  runway: { repo: 'runway-ai-usage-tracker', env: 'RUNWAY_REPO' },
+  runway: {
+    repo: 'runway-ai-usage-tracker',
+    env: 'RUNWAY_REPO',
+    contract: true,
+  },
   branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
   aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
   // Native Android captures; its pipeline has no separate landing profile.

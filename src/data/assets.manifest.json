@@ -33,8 +33,8 @@
     ]
   },
   "runway": {
-    "commit": "1e9d8523",
-    "capturedAt": "2026-10-20",
+    "commit": "1caa0b14",
+    "capturedAt": "2026-11-08",
     "files": [
       "dashboard-desktop.png",
       "dashboard-mobile.png",
@@ -48,7 +48,9 @@
       "provider-mobile.png",
       "provider-tabs.jpg",
       "provider-tabs.mp4",
-      "provider-tabs.webm"
+      "provider-tabs.webm",
+      "settings-desktop.png",
+      "settings-mobile.png"
     ]
   },
   "branchdam": {
