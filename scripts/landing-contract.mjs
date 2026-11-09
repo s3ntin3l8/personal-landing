@@ -12,7 +12,7 @@ export const STILL = {
   desktop: { width: 3200, height: 2000 },
   mobile: { width: 1170, height: 2532 },
 };
-const TOLERANCE = 1;
+export const TOLERANCE = 1;
 const LOOP_EXT = ['.webm', '.mp4', '.jpg'];
 const STILL_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*-(desktop|mobile)\.png$/;
 
@@ -22,6 +22,9 @@ export function pngSize(buf) {
     throw new Error('not a PNG');
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
 }
+
+/** "desktop" or "mobile" for a still's file name, null when it is not named <scene>-<desktop|mobile>.png. */
+export const stillViewport = (name) => STILL_NAME.exec(name)?.[1] ?? null;
 
 const near = (a, b) => Math.abs(a - b) <= TOLERANCE;
 
