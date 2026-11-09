@@ -29,8 +29,8 @@ import runwayDashboardMobile from '../assets/shots/runway/dashboard-mobile.png';
 import branchdamGraph from '../assets/shots/branchdam/asset-graph-desktop.png';
 import branchdamAssets from '../assets/shots/branchdam/assets-desktop.png';
 import branchdamAudit from '../assets/shots/branchdam/audit-queue-desktop.png';
-import branchdamAuditPhone from '../assets/shots/branchdam-mobile/audit-queue.png';
-import branchdamSyncPhone from '../assets/shots/branchdam-mobile/sync-status.png';
+import branchdamAuditPhone from '../assets/shots/branchdam-mobile/audit-queue-mobile.png';
+import branchdamSyncPhone from '../assets/shots/branchdam-mobile/sync-status-mobile.png';
 
 import aerieHome from '../assets/shots/aerie/home-desktop.png';
 import aerieStreams from '../assets/shots/aerie/streams-desktop.png';
@@ -433,7 +433,7 @@ export const projects: Project[] = [
       },
     ],
     loop: {
-      src: '/media/branchdam-asset-graph',
+      src: '/media/branchdam-asset-graph-loop',
       width: 1600,
       height: 1000,
       alt: 'From the branchDAM asset list into an asset and its lineage graph',
