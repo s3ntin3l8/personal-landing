@@ -1,7 +1,6 @@
 // Refreshes the app screenshots and loops from each app's own reproducible
-// capture pipeline (`make screenshots-landing OUT=<dir>` in every app repo,
-// `make screenshots` for branchdam-mobile), all built on an isolated throwaway
-// demo instance with synthetic data.
+// capture pipeline (`make screenshots-landing OUT=<dir>` in every app repo),
+// all built on an isolated throwaway demo instance with synthetic data.
 //
 //   npm run assets:sync                 # every app
 //   npm run assets:sync -- pocket runway
