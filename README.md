@@ -49,7 +49,7 @@ found next to this repo (override a path with `MULLION_REPO`, `POCKET_REPO`,
 - records the source commits in `src/data/assets.manifest.json`.
 
 An app that has moved onto [visual-kit](https://github.com/s3ntin3l8/visual-kit) (`contract: true` in
-`scripts/sync-assets.mjs`) is also checked against the landing contract
+`scripts/landing-apps.mjs`) is also checked against the landing contract
 (`scripts/landing-contract.mjs`): still names and sizes, complete loops. A delivery that breaks it fails the sync.
 `npm test` covers the check.
 
