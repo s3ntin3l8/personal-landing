@@ -85,8 +85,8 @@
     ]
   },
   "aerie": {
-    "commit": "25b97c2",
-    "capturedAt": "2026-10-26",
+    "commit": "84b638c",
+    "capturedAt": "2026-11-09",
     "files": [
       "home-desktop.png",
       "home-live.jpg",
@@ -95,7 +95,8 @@
       "home-mobile.png",
       "requests-desktop.png",
       "status-desktop.png",
-      "streams-desktop.png"
+      "streams-desktop.png",
+      "streams-mobile.png"
     ]
   },
   "sanctuary": {

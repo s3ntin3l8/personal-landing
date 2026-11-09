@@ -3,9 +3,9 @@
 // files of every `contract: true` app to the landing contract).
 //
 // `contract: true` = the app delivers the visual-kit landing contract (see
-// landing-contract.mjs) and the sync fails on a delivery that breaks it. The
-// others still deliver their own names and sizes until they move onto
-// visual-kit (one migration issue per repo); flip the flag as each does.
+// landing-contract.mjs) and the sync fails on a delivery that breaks it. Every
+// app is on it now; a new app can be listed without the flag until it has moved
+// onto visual-kit, and gets it when it does.
 //
 // `elementShots` maps the stills of a contract app that are smaller than their
 // viewport's profile by design (a captured element, not a whole page) to the exact
@@ -39,7 +39,7 @@ export const APPS = {
     contract: true,
     elementShots: { 'asset-graph-desktop.png': { width: 2752, height: 936 } },
   },
-  aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
+  aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO', contract: true },
   // Native Android captures on an emulator (no visual-kit runner), delivered as
   // <scene>-mobile.png at the landing phone size. It boots its own branchDAM
   // demo from BRANCHDAM_DIR (default ../branchDAM).
