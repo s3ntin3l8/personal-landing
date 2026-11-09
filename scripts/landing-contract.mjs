@@ -23,6 +23,9 @@ export function pngSize(buf) {
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
 }
 
+/** "desktop" or "mobile" for a still's file name, null when it is not named <scene>-<desktop|mobile>.png. */
+export const stillViewport = (name) => STILL_NAME.exec(name)?.[1] ?? null;
+
 const near = (a, b) => Math.abs(a - b) <= TOLERANCE;
 
 /**

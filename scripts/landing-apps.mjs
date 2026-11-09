@@ -7,15 +7,16 @@
 // others still deliver their own names and sizes until they move onto
 // visual-kit (one migration issue per repo); flip the flag as each does.
 //
-// `elementShots` lists the stills of a contract app that are smaller than their
-// viewport's profile by design (a captured element, not a whole page). Every other
-// committed still must be exactly the profile size (committed-assets.test.mjs).
+// `elementShots` maps the stills of a contract app that are smaller than their
+// viewport's profile by design (a captured element, not a whole page) to the exact
+// size they have. Every other committed still must be exactly the profile size
+// (committed-assets.test.mjs).
 export const APPS = {
   sanctuary: {
     repo: 'sanctuary',
     env: 'SANCTUARY_REPO',
     contract: true,
-    elementShots: ['triage-filter-desktop.png'],
+    elementShots: { 'triage-filter-desktop.png': { width: 768, height: 348 } },
   },
   mullion: {
     repo: 'mullion-session-manager',
@@ -36,7 +37,7 @@ export const APPS = {
     repo: 'branchDAM',
     env: 'BRANCHDAM_REPO',
     contract: true,
-    elementShots: ['asset-graph-desktop.png'],
+    elementShots: { 'asset-graph-desktop.png': { width: 2752, height: 936 } },
   },
   aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
   // Native Android captures on an emulator (no visual-kit runner), delivered as

@@ -8,6 +8,7 @@ import {
   checkDelivery,
   pngSize,
   STILL,
+  stillViewport,
   TOLERANCE,
 } from './landing-contract.mjs';
 
@@ -19,7 +20,8 @@ import {
 // element shots), so on its own it lets a wrongly sized still hide behind a good one.
 // Here every committed still must therefore be exactly its viewport's profile size
 // (within the contract's 1px), unless the app lists it in `elementShots`
-// (landing-apps.mjs); a listed shot must exist and may not exceed the profile.
+// (landing-apps.mjs) with the size it has by design: a listed shot must exist and
+// have exactly that size, so a replaced element shot cannot hide behind the list.
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(
   readFileSync(path.join(ROOT, 'src/data/assets.manifest.json'), 'utf8'),
@@ -56,27 +58,22 @@ for (const [id, app] of Object.entries(APPS)) {
     }
     assert.deepEqual(checkDelivery(files), []);
 
-    const element = new Set(app.elementShots ?? []);
-    for (const name of element)
+    const element = app.elementShots ?? {};
+    for (const name of Object.keys(element))
       assert.ok(
         files.some((f) => f.name === name),
         `${id}: elementShots lists ${name}, which is not committed`,
       );
     for (const { name, size } of files.filter((f) => f.size)) {
-      const profile =
-        STILL[name.endsWith('-mobile.png') ? 'mobile' : 'desktop'];
-      if (element.has(name))
-        assert.ok(
-          size.width <= profile.width + TOLERANCE &&
-            size.height <= profile.height + TOLERANCE,
-          `${id}: ${name} is an element shot but is larger than the profile`,
-        );
-      else
-        assert.ok(
-          Math.abs(size.width - profile.width) <= TOLERANCE &&
-            Math.abs(size.height - profile.height) <= TOLERANCE,
-          `${id}: ${name} is ${size.width}x${size.height}, expected ${profile.width}x${profile.height} (list it in elementShots if it is smaller by design)`,
-        );
+      const expected = element[name] ?? STILL[stillViewport(name)];
+      assert.ok(
+        Math.abs(size.width - expected.width) <= TOLERANCE &&
+          Math.abs(size.height - expected.height) <= TOLERANCE,
+        `${id}: ${name} is ${size.width}x${size.height}, expected ${expected.width}x${expected.height}` +
+          (name in element
+            ? ' (its elementShots entry)'
+            : ' (list it in elementShots with its size if it is smaller by design)'),
+      );
     }
   });
 }

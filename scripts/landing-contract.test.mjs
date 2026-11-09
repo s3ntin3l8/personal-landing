@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { checkDelivery, pngSize } from './landing-contract.mjs';
+import { checkDelivery, pngSize, stillViewport } from './landing-contract.mjs';
 
 const still = (name, width, height) => ({ name, size: { width, height } });
 const triplet = (stem) =>
@@ -73,4 +73,11 @@ test('legacy-named stills are reported as misnamed, not as an empty delivery', (
   const problems = checkDelivery([still('desktop-dashboard.png', 3200, 2000)]);
   assert.equal(problems.length, 1);
   assert.match(problems[0], /a still is named/);
+});
+
+test("stillViewport reads the viewport from a still's name", () => {
+  assert.equal(stillViewport('holdings-desktop.png'), 'desktop');
+  assert.equal(stillViewport('session-list-mobile.png'), 'mobile');
+  assert.equal(stillViewport('holdings-tablet.png'), null);
+  assert.equal(stillViewport('holdings.png'), null);
 });
