@@ -27,13 +27,14 @@ export const APPS = {
     env: 'RUNWAY_REPO',
     contract: true,
   },
-  branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO' },
+  branchdam: { repo: 'branchDAM', env: 'BRANCHDAM_REPO', contract: true },
   aerie: { repo: 'aerie-media-dashboard', env: 'AERIE_REPO' },
-  // Native Android captures; its pipeline has no separate landing profile.
-  // It boots its own branchDAM demo from BRANCHDAM_DIR (default ../branchDAM).
+  // Native Android captures on an emulator (no visual-kit runner), delivered as
+  // <scene>-mobile.png at the landing phone size. It boots its own branchDAM
+  // demo from BRANCHDAM_DIR (default ../branchDAM).
   'branchdam-mobile': {
     repo: 'branchdam-mobile',
     env: 'BRANCHDAM_MOBILE_REPO',
-    target: 'screenshots',
+    contract: true,
   },
 };

@@ -57,30 +57,32 @@
     ]
   },
   "branchdam": {
-    "commit": "198cf84",
-    "capturedAt": "2026-10-20",
+    "commit": "1a41610",
+    "capturedAt": "2026-11-09",
     "files": [
       "asset-detail-desktop.png",
       "asset-detail-mobile.png",
       "asset-graph-desktop.png",
+      "asset-graph-loop.jpg",
+      "asset-graph-loop.mp4",
+      "asset-graph-loop.webm",
       "asset-graph-mobile.png",
-      "asset-graph.jpg",
-      "asset-graph.mp4",
-      "asset-graph.webm",
       "assets-desktop.png",
       "assets-mobile.png",
       "audit-queue-desktop.png",
       "audit-queue-mobile.png",
       "jobs-desktop.png",
-      "jobs-mobile.png",
-      "storage-health-desktop.png",
-      "storage-health-mobile.png"
+      "jobs-mobile.png"
     ]
   },
   "branchdam-mobile": {
-    "commit": "8ff0e89",
-    "capturedAt": "2026-10-20",
-    "files": ["audit-queue.png", "gallery.png", "sync-status.png"]
+    "commit": "93706c9",
+    "capturedAt": "2026-11-09",
+    "files": [
+      "audit-queue-mobile.png",
+      "gallery-mobile.png",
+      "sync-status-mobile.png"
+    ]
   },
   "aerie": {
     "commit": "25b97c2",
