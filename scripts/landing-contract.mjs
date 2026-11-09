@@ -12,7 +12,7 @@ export const STILL = {
   desktop: { width: 3200, height: 2000 },
   mobile: { width: 1170, height: 2532 },
 };
-const TOLERANCE = 1;
+export const TOLERANCE = 1;
 const LOOP_EXT = ['.webm', '.mp4', '.jpg'];
 const STILL_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*-(desktop|mobile)\.png$/;
 
